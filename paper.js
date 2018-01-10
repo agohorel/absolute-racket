@@ -1,13 +1,17 @@
+var size = 300;
+
 var keys = {
 	a: {
-		shape: function(x, y, size){
-			return Path.Circle(x, y, size);
+		shape: function(){
+			randomCoords();
+			return Path.Circle(coord[0] , coord[1], size);
 		},
 		color: "#00FF00"
 	},
 	b: {
-		shape: function(x, y, size){
-			return Path.Circle(x, y, size);
+		shape: function(){
+			randomCoords();
+			return Path.Rectangle(coord[0] , coord[1], size, size);
 		},
 		color: "#FF0000"
 	}
@@ -16,9 +20,7 @@ var keys = {
 var shapes = [];
 
 function onKeyDown(event){
-	var x = Math.random() * view.size.width;
-	var y = Math.random() * view.size.height;
-	var newShape = keys[event.key].shape(x, y, 300);
+	var newShape = keys[event.key].shape();
 	newShape.fillColor = keys[event.key].color;
 	shapes.push(newShape);
 }
@@ -34,4 +36,11 @@ function onFrame(event){
 			console.log(shapes);
 		}
 	}
+}
+
+
+function randomCoords(){
+	var x = Math.random() * view.size.width;
+	var y = Math.random() * view.size.height;
+	return coord = [x, y];
 }
