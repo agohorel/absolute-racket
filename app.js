@@ -1,9 +1,5 @@
-var shapeSize = 300,
-	shapes = [],
-	hpFilter;
-
 /////////////////// p5.js stuff ///////////////////
-
+var hpFilter;
 hpFilter = new p5.HighPass();
 
 function preload(){
@@ -20,22 +16,29 @@ function setup(){
 	// route kick signal to filter
 	sounds[0].connect(hpFilter);
 	// default bp freq
-	freq = 0;
-	hpFilter.freq(freq);
+	var hpCutoff = 0;
+	hpFilter.freq(hpCutoff);
 }
 
 function mouseDragged(){
-	var freq = map(mouseX, 0, windowWidth, 20, 500);
-	hpFilter.freq(freq);
-	console.log(freq);
+	hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
+	var q = map(mouseY, 0, windowHeight, 10, .001);
+	hpFilter.freq(hpCutoff);
+	hpFilter.res(q);
+	console.log("cutoff is: " + hpCutoff + " resonance is: " + q);
 }
 
 function mouseReleased(){
-	freq = 0;
-	hpFilter.freq(freq);
+	hpCutoff = 0;
+	q = 0;
+	hpFilter.freq(hpCutoff);
+	hpFilter.res(q);
 }
 
 /////////////////// paper.js stuff ///////////////////
+
+var shapeSize = 300,
+	shapes = [];
 
 function onKeyDown(event){
 	// check if pressed key exists in keys object
@@ -60,6 +63,7 @@ function onFrame(event){
 	}	 
 }
 
+/////////////////// END paper.js stuff ///////////////////
 
 var keys = {
 	a: {
