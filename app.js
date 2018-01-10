@@ -1,5 +1,10 @@
 var shapeSize = 300,
-	shapes = [];
+	shapes = [],
+	reverb, 
+	bpFilter;
+
+reverb = new p5.Reverb();
+bpFilter = new p5.HighPass();
 
 function preload(){
 	var kick = loadSound("./audio/kick.wav"),
@@ -10,6 +15,18 @@ function preload(){
 
 function setup(){
 	soundFormats("wav", "ogg");
+	// set initial reverb params
+	reverb.process(sounds[1], 0, 0);
+	// mute dry kick signal
+	sounds[0].disconnect();
+	// route kick signal to filter
+	sounds[0].connect(bpFilter);
+}
+
+function draw(){
+	var freq = map(mouseX, 0, windowWidth, 20, 300);
+	bpFilter.freq(freq);
+	console.log(freq);
 }
 
 var keys = {
@@ -66,4 +83,12 @@ function randomCoords(){
 	var x = Math.random() * view.size.width;
 	var y = Math.random() * view.size.height;
 	return coords = new Point(x, y);
+}
+
+// change reverb params - problematic (causes lag)
+function mousePressed(){
+	console.log("the mouse has been moved to " + mouseX, mouseY);
+	var duration = map(mouseX, 0, 1300, 0, 8);
+	var decay = map(mouseY, -1000, 0, 0, 90);
+	reverb.set(duration, decay);
 }
