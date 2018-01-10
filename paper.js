@@ -4,16 +4,23 @@ var keys = {
 	a: {
 		shape: function(){
 			randomCoords();
-			return Path.Circle(coord[0] , coord[1], size);
+			return Path.Circle(coords, size);
 		},
 		color: "#00FF00"
 	},
 	b: {
 		shape: function(){
 			randomCoords();
-			return Path.Rectangle(coord[0] , coord[1], size, size);
+			return Path.Rectangle(coords, size, size);
 		},
 		color: "#FF0000"
+	},
+	c: {
+		shape: function(){
+			randomCoords();
+			return Path.RegularPolygon(coords, 3, size);
+		},
+		color: "#0000FF"
 	}
 }
 
@@ -45,5 +52,5 @@ function onFrame(event){
 function randomCoords(){
 	var x = Math.random() * view.size.width;
 	var y = Math.random() * view.size.height;
-	return coord = [x, y];
+	return coords = new Point(x, y);
 }
