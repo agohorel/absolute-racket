@@ -1,32 +1,42 @@
-var size = 300,
+var shapeSize = 300,
 	shapes = [];
+
+function preload(){
+	var kick = loadSound("./audio/kick.wav"),
+		snare = loadSound("./audio/snare.wav"),
+		hat = loadSound("./audio/hat.wav");
+	return sounds = [kick, snare, hat];
+}
+
+function setup(){
+	soundFormats("wav", "ogg");
+}
 
 var keys = {
 	a: {
 		shape: function(){
 			randomCoords();
-			return Path.Circle(coords, size);
+			sounds[0].play();
+			return Path.Circle(coords, shapeSize);
 		},
 		color: "#00FF00"
 	},
 	b: {
 		shape: function(){
 			randomCoords();
-			return Path.Rectangle(coords, size, size);
+			sounds[1].play();
+			return Path.Rectangle(coords, shapeSize, shapeSize);
 		},
 		color: "#FF0000"
 	},
 	c: {
 		shape: function(){
 			randomCoords();
-			return Path.RegularPolygon(coords, 3, size);
+			sounds[2].play();
+			return Path.RegularPolygon(coords, 3, shapeSize);
 		},
 		color: "#0000FF"
 	}
-}
-
-function setup(){
-	console.log("this p5.js thing is loading");
 }
 
 function onKeyDown(event){
