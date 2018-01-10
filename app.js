@@ -1,4 +1,5 @@
-var size = 300;
+var size = 300,
+	shapes = [];
 
 var keys = {
 	a: {
@@ -24,7 +25,9 @@ var keys = {
 	}
 }
 
-var shapes = [];
+function setup(){
+	console.log("this p5.js thing is loading");
+}
 
 function onKeyDown(event){
 	// check if pressed key exists in keys object
