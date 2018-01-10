@@ -20,9 +20,14 @@ var keys = {
 var shapes = [];
 
 function onKeyDown(event){
-	var newShape = keys[event.key].shape();
-	newShape.fillColor = keys[event.key].color;
-	shapes.push(newShape);
+	// check if pressed key exists in keys object
+	if (keys[event.key]){
+		var newShape = keys[event.key].shape();
+		newShape.fillColor = keys[event.key].color;
+		shapes.push(newShape);
+	} else {
+		console.log("You pressed the " + event.key + " which does not exist in the keys object.");
+	}	
 }
 
 function onFrame(event){
@@ -33,11 +38,9 @@ function onFrame(event){
 		if (shapes[i].area < 1){
 			shapes[i].remove();
 			shapes.splice(i, 1);
-			console.log(shapes);
 		}
-	}
+	}	 
 }
-
 
 function randomCoords(){
 	var x = Math.random() * view.size.width;
