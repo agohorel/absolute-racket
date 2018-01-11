@@ -13,26 +13,34 @@ function preload(){
 
 function setup(){
 	soundFormats("wav", "ogg");
-	// mute all dry signals and route all signals to filter
-	for (var i = 0; i < sounds.length; i++){
-		sounds[i].disconnect();
-		sounds[i].connect(hpFilter);	
-		sounds[i].connect(lpFilter);	
-	}
 	resetFilters();
 }
 
 function mouseDragged(){
-	q = map(mouseY, 0, windowHeight, 10, .001);
+	q = map(mouseY, 0, windowHeight, 5, .001);
 
+	// LFP controls
 	if (mouseButton === LEFT){
+		
+		for (var i = 0; i < sounds.length; i++){
+			sounds[i].disconnect();
+			sounds[i].connect(hpFilter)
+		}
+
 		hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
 		hpFilter.freq(hpCutoff);
 		hpFilter.res(q);
 		console.log("cutoff is: " + hpCutoff + " resonance is: " + q);
 	}
 
+	// HFP controls
 	else if (mouseButton === RIGHT){
+		
+		for (var i = 0; i < sounds.length; i++){
+			sounds[i].disconnect();
+			sounds[i].connect(lpFilter)
+		}
+		
 		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
@@ -84,7 +92,7 @@ function onFrame(event){
 	// decrement loop to avoid splice() fuckery
 	for (var i = shapes.length - 1; i >= 0; i--){
 		shapes[i].fillColor.hue += bands[0] * .05;
-		shapes[i].scale(.85);
+		shapes[i].scale(.9);
 		if (shapes[i].area < 1){
 			shapes[i].remove();
 			shapes.splice(i, 1);
