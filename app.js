@@ -1,6 +1,7 @@
 /////////////////// p5.js stuff ///////////////////
-var hpFilter, fft, bass, mid, high, bands = [];
+var hpFilter, lpFilter, q, fft, bass, mid, high, bands = [];
 hpFilter = new p5.HighPass();
+lpFilter = new p5.LowPass();
 fft = new p5.FFT();
 
 function preload(){
@@ -16,25 +17,31 @@ function setup(){
 	for (var i = 0; i < sounds.length; i++){
 		sounds[i].disconnect();
 		sounds[i].connect(hpFilter);	
+		sounds[i].connect(lpFilter);	
 	}
-	// default bp freq
-	var hpCutoff = 0;
-	hpFilter.freq(hpCutoff);
+	resetFilters();
 }
 
 function mouseDragged(){
-	hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
-	var q = map(mouseY, 0, windowHeight, 10, .001);
-	hpFilter.freq(hpCutoff);
-	hpFilter.res(q);
-	console.log("cutoff is: " + hpCutoff + " resonance is: " + q);
+	q = map(mouseY, 0, windowHeight, 10, .001);
+
+	if (mouseButton === LEFT){
+		hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
+		hpFilter.freq(hpCutoff);
+		hpFilter.res(q);
+		console.log("cutoff is: " + hpCutoff + " resonance is: " + q);
+	}
+
+	else if (mouseButton === RIGHT){
+		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
+		lpFilter.freq(lpCutoff);
+		lpFilter.res(q);
+		console.log("cutoff is: " + lpCutoff + " resonance is: " + q);
+	}	
 }
 
 function mouseReleased(){
-	hpCutoff = 0;
-	q = 0;
-	hpFilter.freq(hpCutoff);
-	hpFilter.res(q);
+	resetFilters();
 }
 
 function myFFT(){
@@ -44,6 +51,16 @@ function myFFT(){
 	high = fft.getEnergy("treble");
 	//console.log("bass: " + bass + " mid: " + mid + " hi: " + high);
 	return bands = [bass, mid, high];
+}
+
+function resetFilters(){
+	hpCutoff = 0;
+	lpCutoff = 20000;
+	q = 0;
+	hpFilter.freq(hpCutoff);
+	lpFilter.freq(lpCutoff);
+	hpFilter.res(q);
+	lpFilter.res(q);
 }
 
 /////////////////// paper.js stuff ///////////////////
