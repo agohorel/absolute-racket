@@ -12,10 +12,11 @@ function preload(){
 
 function setup(){
 	soundFormats("wav", "ogg");
-	// mute dry kick signal
-	sounds[0].disconnect();
-	// route kick signal to filter
-	sounds[0].connect(hpFilter);
+	// mute all dry signals and route all signals to filter
+	for (var i = 0; i < sounds.length; i++){
+		sounds[i].disconnect();
+		sounds[i].connect(hpFilter);	
+	}
 	// default bp freq
 	var hpCutoff = 0;
 	hpFilter.freq(hpCutoff);
@@ -65,7 +66,7 @@ function onFrame(event){
 	myFFT();
 	// decrement loop to avoid splice() fuckery
 	for (var i = shapes.length - 1; i >= 0; i--){
-		shapes[i].fillColor.hue += bands[0] * .03;
+		shapes[i].fillColor.hue += bands[0] * .05;
 		shapes[i].scale(.85);
 		if (shapes[i].area < 1){
 			shapes[i].remove();
