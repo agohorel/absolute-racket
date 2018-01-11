@@ -1,6 +1,7 @@
 /////////////////// p5.js stuff ///////////////////
-var hpFilter;
+var hpFilter, fft, bands = [];
 hpFilter = new p5.HighPass();
+fft = new p5.FFT();
 
 function preload(){
 	var kick = loadSound("./audio/kick.wav"),
@@ -18,6 +19,15 @@ function setup(){
 	// default bp freq
 	var hpCutoff = 0;
 	hpFilter.freq(hpCutoff);
+}
+
+function draw(){
+	var spectrum = fft.analyze();
+
+	for (var i = 0; i < spectrum.length; i+=8){
+		bands.push(spectrum[i]);
+	}
+	console.log(bands);
 }
 
 function mouseDragged(){
@@ -63,10 +73,8 @@ function onFrame(event){
 	}	 
 }
 
-/////////////////// END paper.js stuff ///////////////////
-
 var keys = {
-	a: {
+	z: {
 		shape: function(){
 			randomCoords();
 			sounds[0].play();
@@ -74,7 +82,7 @@ var keys = {
 		},
 		color: "#00FF00"
 	},
-	b: {
+	x: {
 		shape: function(){
 			randomCoords();
 			sounds[1].play();
