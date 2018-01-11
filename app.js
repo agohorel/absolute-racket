@@ -1,5 +1,5 @@
 /////////////////// p5.js stuff ///////////////////
-var hpFilter, fft, bands = [];
+var hpFilter, fft, bass, mid, high, bands = [];
 hpFilter = new p5.HighPass();
 fft = new p5.FFT();
 
@@ -21,15 +21,6 @@ function setup(){
 	hpFilter.freq(hpCutoff);
 }
 
-function draw(){
-	var spectrum = fft.analyze();
-
-	for (var i = 0; i < spectrum.length; i+=8){
-		bands.push(spectrum[i]);
-	}
-	console.log(bands);
-}
-
 function mouseDragged(){
 	hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
 	var q = map(mouseY, 0, windowHeight, 10, .001);
@@ -43,6 +34,15 @@ function mouseReleased(){
 	q = 0;
 	hpFilter.freq(hpCutoff);
 	hpFilter.res(q);
+}
+
+function myFFT(){
+	spectrum = fft.analyze();
+	bass = fft.getEnergy("bass");
+	mid = fft.getEnergy("mid");
+	high = fft.getEnergy("treble");
+	//console.log("bass: " + bass + " mid: " + mid + " hi: " + high);
+	return bands = [bass, mid, high];
 }
 
 /////////////////// paper.js stuff ///////////////////
@@ -62,9 +62,10 @@ function onKeyDown(event){
 }
 
 function onFrame(event){
+	myFFT();
 	// decrement loop to avoid splice() fuckery
 	for (var i = shapes.length - 1; i >= 0; i--){
-		shapes[i].fillColor.hue += 2;
+		shapes[i].fillColor.hue += bands[0] * .03;
 		shapes[i].scale(.85);
 		if (shapes[i].area < 1){
 			shapes[i].remove();
@@ -80,7 +81,7 @@ var keys = {
 			sounds[0].play();
 			return Path.Circle(coords, shapeSize);
 		},
-		color: "#00FF00"
+		color: "#FF0000"
 	},
 	x: {
 		shape: function(){
@@ -88,7 +89,7 @@ var keys = {
 			sounds[1].play();
 			return Path.Rectangle(coords, shapeSize, shapeSize);
 		},
-		color: "#FF0000"
+		color: "#00FF00"
 	},
 	c: {
 		shape: function(){
