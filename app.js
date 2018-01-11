@@ -1,5 +1,16 @@
 /////////////////// p5.js stuff ///////////////////
-var hpFilter, lpFilter, q, fft, bass, mid, high, bands = [];
+var hpFilter,
+	hpCutoff,
+	lpFilter,
+	lpCutoff,
+	q,
+	volume,
+	fft,
+	bass,
+	mid,
+	high,
+	audioParams = [];
+
 hpFilter = new p5.HighPass();
 lpFilter = new p5.LowPass();
 fft = new p5.FFT();
@@ -54,11 +65,12 @@ function mouseReleased(){
 
 function myFFT(){
 	spectrum = fft.analyze();
+	volume = map(getMasterVolume(), 0, 1, 0, 300);
 	bass = fft.getEnergy("bass");
 	mid = fft.getEnergy("mid");
 	high = fft.getEnergy("treble");
 	//console.log("bass: " + bass + " mid: " + mid + " hi: " + high);
-	return bands = [bass, mid, high];
+	return audioParams = [bass, mid, high, volume];
 }
 
 function resetFilters(){
@@ -73,13 +85,12 @@ function resetFilters(){
 
 /////////////////// paper.js stuff ///////////////////
 
-var shapeSize = 300,
-	shapes = [];
+var shapes = [];
 
 function onKeyDown(event){
 	// check if pressed key exists in keys object
 	if (keys[event.key]){
-		var newShape = keys[event.key].shape();
+		var newShape = keys[event.key].shape(audioParams[3]);
 		newShape.fillColor = keys[event.key].color;
 		shapes.push(newShape);
 	} else {
@@ -91,7 +102,7 @@ function onFrame(event){
 	myFFT();
 	// decrement loop to avoid splice() fuckery
 	for (var i = shapes.length - 1; i >= 0; i--){
-		shapes[i].fillColor.hue += bands[0] * .05;
+		shapes[i].fillColor.hue += audioParams[0] * .05;
 		shapes[i].scale(.9);
 		if (shapes[i].area < 1){
 			shapes[i].remove();
@@ -102,7 +113,7 @@ function onFrame(event){
 
 var keys = {
 	z: {
-		shape: function(){
+		shape: function(shapeSize){
 			randomCoords();
 			sounds[0].play();
 			return Path.Circle(coords, shapeSize);
@@ -110,7 +121,7 @@ var keys = {
 		color: "#FF0000"
 	},
 	x: {
-		shape: function(){
+		shape: function(shapeSize){
 			randomCoords();
 			sounds[1].play();
 			return Path.Rectangle(coords, shapeSize, shapeSize);
@@ -118,7 +129,7 @@ var keys = {
 		color: "#00FF00"
 	},
 	c: {
-		shape: function(){
+		shape: function(shapeSize){
 			randomCoords();
 			sounds[2].play();
 			return Path.RegularPolygon(coords, 3, shapeSize);
