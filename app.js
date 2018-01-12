@@ -4,15 +4,16 @@ var hpFilter,
 	lpFilter,
 	lpCutoff,
 	q,
-	volume,
 	fft,
 	bass,
 	mid,
 	high,
+	amplitude,
 	audioParams = [];
 
 hpFilter = new p5.HighPass();
 lpFilter = new p5.LowPass();
+amplitude = new p5.Amplitude();
 fft = new p5.FFT();
 
 function preload(){
@@ -55,7 +56,7 @@ function mouseDragged(){
 		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
-		console.log("cutoff is: " + lpCutoff + " resonance is: " + q);
+		//console.log("cutoff is: " + lpCutoff + " resonance is: " + q);
 	}	
 }
 
@@ -65,11 +66,11 @@ function mouseReleased(){
 
 function myFFT(){
 	spectrum = fft.analyze();
-	volume = map(getMasterVolume(), 0, 1, 0, 300);
+	volume = amplitude.getLevel() * 300;
 	bass = fft.getEnergy("bass");
 	mid = fft.getEnergy("mid");
 	high = fft.getEnergy("treble");
-	//console.log("bass: " + bass + " mid: " + mid + " hi: " + high);
+	console.log("volume: " + volume + " bass: " + bass + " mid: " + mid + " hi: " + high);
 	return audioParams = [bass, mid, high, volume];
 }
 
@@ -90,7 +91,8 @@ var shapes = [];
 function onKeyDown(event){
 	// check if pressed key exists in keys object
 	if (keys[event.key]){
-		var newShape = keys[event.key].shape(audioParams[3]);
+		console.log(" \n ONKEYDOWN volume is " + audioParams[3] + "\n");
+		var newShape = keys[event.key].shape(audioParams[3] + 75);
 		newShape.fillColor = keys[event.key].color;
 		shapes.push(newShape);
 	} else {
