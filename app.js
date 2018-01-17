@@ -11,31 +11,34 @@ var hpFilter,
 	amplitude,
 	audioParams = [];
 
-var canvas, 
+var canvas,
+	x,
+	y,
+	vector, 
 	shapes = [];
 
 var keys = {
 	z: {
 		shape: function(shapeSize){
-			randomCoords();
+			makeVector();
 			sounds[0].play();
-			return rect(coords[0], coords[1], shapeSize, shapeSize);
+			return rect(vector.x, vector.y, shapeSize, shapeSize);
 		},
 		color: "#FF0000"
 	},
 	x: {
 		shape: function(shapeSize){
-			randomCoords();
+			makeVector();
 			sounds[1].play();
-			return rect(coords[0], coords[1], shapeSize, shapeSize);
+			return rect(vector.x, vector.y, shapeSize, shapeSize);
 		},
 		color: "#00FF00"
 	},
 	c: {
 		shape: function(shapeSize){
-			randomCoords();
+			makeVector();
 			sounds[2].play();
-			return ellipse(coords[0], coords[1], shapeSize);
+			return ellipse(vector.x, vector.y, shapeSize);
 		},
 		color: "#0000FF"
 	}
@@ -142,10 +145,11 @@ function windowResized() {
 	centerCanvas();
 }
 
-function randomCoords(){
-	var x = Math.random() * windowWidth;
-	var y = Math.random() * windowHeight;
-	return coords = [x, y];
+function makeVector(){
+	x = Math.random() * windowWidth;
+	y = Math.random() * windowHeight;
+	vector = createVector(x, y);
+	return vector;
 }
 
 /////////////////// paper.js stuff ///////////////////
