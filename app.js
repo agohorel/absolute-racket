@@ -17,15 +17,21 @@ amplitude = new p5.Amplitude();
 fft = new p5.FFT();
 
 function preload(){
-	var kick = loadSound("./audio/kick.wav"),
-		snare = loadSound("./audio/snare.wav"),
+	var kick = loadSound("./audio/raea_kick.wav"),
+		snare = loadSound("./audio/raea_perc.wav"),
 		hat = loadSound("./audio/hat.wav");
 	return sounds = [kick, snare, hat];
 }
 
 function setup(){
+	canvas = createCanvas(windowWidth, windowHeight);
+	centerCanvas();
 	soundFormats("wav", "ogg");
 	resetFilters();
+}
+
+function draw(){
+	rect(mouseX, mouseY, 100, 100);
 }
 
 function mouseDragged(){
@@ -66,7 +72,7 @@ function mouseReleased(){
 
 function myFFT(){
 	spectrum = fft.analyze();
-	volume = amplitude.getLevel() * 300;
+	volume = amplitude.getLevel();
 	bass = fft.getEnergy("bass");
 	mid = fft.getEnergy("mid");
 	high = fft.getEnergy("treble");
@@ -84,34 +90,45 @@ function resetFilters(){
 	lpFilter.res(q);
 }
 
+function centerCanvas() {
+	var x = (windowWidth - width) / 2;
+	var y = (windowHeight - height) / 2;
+	canvas.position(x, y);
+}
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+	centerCanvas();
+}
+
 /////////////////// paper.js stuff ///////////////////
 
 var shapes = [];
 
-function onKeyDown(event){
-	// check if pressed key exists in keys object
-	if (keys[event.key]){
-		console.log(" \n ONKEYDOWN volume is " + audioParams[3] + "\n");
-		var newShape = keys[event.key].shape(audioParams[3] + 75);
-		newShape.fillColor = keys[event.key].color;
-		shapes.push(newShape);
-	} else {
-		console.log("You pressed the " + event.key + " which does not exist in the keys object.");
-	}	
-}
+// function onKeyDown(event){
+// 	// check if pressed key exists in keys object
+// 	if (keys[event.key]){
+// 		console.log(" \n ONKEYDOWN volume is " + audioParams[3] + "\n");
+// 		var newShape = keys[event.key].shape((audioParams[3] * 300) + 75);
+// 		newShape.fillColor = keys[event.key].color;
+// 		shapes.push(newShape);
+// 	} else {
+// 		console.log("You pressed the " + event.key + " which does not exist in the keys object.");
+// 	}	
+// }
 
-function onFrame(event){
-	myFFT();
-	// decrement loop to avoid splice() fuckery
-	for (var i = shapes.length - 1; i >= 0; i--){
-		shapes[i].fillColor.hue += audioParams[0] * .05;
-		shapes[i].scale(.9);
-		if (shapes[i].area < 1){
-			shapes[i].remove();
-			shapes.splice(i, 1);
-		}
-	}	 
-}
+// function onFrame(event){
+// 	myFFT();
+// 	// decrement loop to avoid splice() fuckery
+// 	for (var i = shapes.length - 1; i >= 0; i--){
+// 		shapes[i].fillColor.hue += audioParams[0] * .05;
+// 		shapes[i].scale(map(audioParams[3], 0, 1, .8, 5));
+// 		if (shapes[i].area < 1){
+// 			shapes[i].remove();
+// 			shapes.splice(i, 1);
+// 		}
+// 	}	 
+// }
 
 var keys = {
 	z: {
