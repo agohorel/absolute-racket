@@ -11,10 +11,35 @@ var hpFilter,
 	amplitude,
 	audioParams = [];
 
-hpFilter = new p5.HighPass();
-lpFilter = new p5.LowPass();
-amplitude = new p5.Amplitude();
-fft = new p5.FFT();
+var canvas, 
+	shapes = [];
+
+var keys = {
+	z: {
+		shape: function(shapeSize){
+			randomCoords();
+			sounds[0].play();
+			return rect(coords[0], coords[1], shapeSize, shapeSize);
+		},
+		color: "#FF0000"
+	},
+	x: {
+		shape: function(shapeSize){
+			randomCoords();
+			sounds[1].play();
+			return rect(coords[0], coords[1], shapeSize, shapeSize);
+		},
+		color: "#00FF00"
+	},
+	c: {
+		shape: function(shapeSize){
+			randomCoords();
+			sounds[2].play();
+			return ellipse(coords[0], coords[1], shapeSize);
+		},
+		color: "#0000FF"
+	}
+}	
 
 function preload(){
 	var kick = loadSound("./audio/raea_kick.wav"),
@@ -26,12 +51,28 @@ function preload(){
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
 	centerCanvas();
+	hpFilter = new p5.HighPass();
+	lpFilter = new p5.LowPass();
+	amplitude = new p5.Amplitude();
+	fft = new p5.FFT();
 	soundFormats("wav", "ogg");
 	resetFilters();
 }
 
 function draw(){
-	rect(mouseX, mouseY, 100, 100);
+	myFFT();
+}
+
+function keyPressed(){
+	var lowercaseKey = key.toLowerCase();
+	// check if pressed key exists in keys object
+	if (keys[lowercaseKey]){
+		console.log(key);
+		var newShape = keys[lowercaseKey].shape((audioParams[3] * 300) + 75);
+		shapes.push(newShape);
+	} else {
+		console.log("you pressed the " + key + " key, which doesn't exist in the keys object.");
+	}
 }
 
 function mouseDragged(){
@@ -101,9 +142,13 @@ function windowResized() {
 	centerCanvas();
 }
 
-/////////////////// paper.js stuff ///////////////////
+function randomCoords(){
+	var x = Math.random() * windowWidth;
+	var y = Math.random() * windowHeight;
+	return coords = [x, y];
+}
 
-var shapes = [];
+/////////////////// paper.js stuff ///////////////////
 
 // function onKeyDown(event){
 // 	// check if pressed key exists in keys object
@@ -129,36 +174,3 @@ var shapes = [];
 // 		}
 // 	}	 
 // }
-
-var keys = {
-	z: {
-		shape: function(shapeSize){
-			randomCoords();
-			sounds[0].play();
-			return Path.Circle(coords, shapeSize);
-		},
-		color: "#FF0000"
-	},
-	x: {
-		shape: function(shapeSize){
-			randomCoords();
-			sounds[1].play();
-			return Path.Rectangle(coords, shapeSize, shapeSize);
-		},
-		color: "#00FF00"
-	},
-	c: {
-		shape: function(shapeSize){
-			randomCoords();
-			sounds[2].play();
-			return Path.RegularPolygon(coords, 3, shapeSize);
-		},
-		color: "#0000FF"
-	}
-}
-
-function randomCoords(){
-	var x = Math.random() * view.size.width;
-	var y = Math.random() * view.size.height;
-	return coords = new Point(x, y);
-}
