@@ -19,46 +19,6 @@ var canvas,
 	shapes = [],
 	lastPressedKey = "";
 
-var keys = {
-	z: {
-		shape: function(shapeSize){
-			makeVector();
-			return rect(vector.x, vector.y, shapeSize, shapeSize);
-		},
-		sound: function(){
-			sounds[0].play();
-		},
-		color: "#FF0000"
-	},
-	x: {
-		shape: function(shapeSize){
-			makeVector();
-			return rect(vector.x, vector.y, shapeSize, shapeSize/2);
-		},
-		sound: function(){
-			sounds[1].play();
-		},
-		color: "#00FF00"
-	},
-	c: {
-		shape: function(shapeSize){
-			makeVector();
-			return ellipse(vector.x, vector.y, shapeSize);
-		},
-		sound: function(){
-			sounds[2].play();
-		},
-		color: "#0000FF"
-	}
-}	
-
-function preload(){
-	var kick = loadSound("./audio/raea_kick.wav"),
-		snare = loadSound("./audio/raea_perc.wav"),
-		hat = loadSound("./audio/hat.wav");
-	return sounds = [kick, snare, hat];
-}
-
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
 	centerCanvas();
@@ -66,33 +26,15 @@ function setup(){
 	lpFilter = new p5.LowPass();
 	amplitude = new p5.Amplitude();
 	fft = new p5.FFT();
-	soundFormats("wav", "ogg");
 	resetFilters();
 }
 
 function draw(){
 	myFFT();
-
-	// loop through all sounds and check if any are playing
-	for (var i = 0; i < sounds.length; i++){
-		if (sounds[i].isPlaying()){
-			// spawn selected shape and pass in volume as size param
-			keys[lastPressedKey].shape(volume * 200);
-		}
-	}
 }
 
 function keyPressed(){
-	lastPressedKey = key.toLowerCase();
-	// check if pressed key exists in keys object
-	if (keys[lastPressedKey]){
-		keys[lastPressedKey].sound();
-		var newShape = keys[lastPressedKey].shape(100);
-		shapes.push(newShape);
-		return lastPressedKey;
-	} else {
-		console.log("you pressed the " + key + " key, which doesn't exist in the keys object.");
-	}
+
 }
 
 function mouseDragged(){
@@ -168,30 +110,3 @@ function makeVector(){
 	vector = createVector(x, y);
 	return vector;
 }
-
-/////////////////// paper.js stuff ///////////////////
-
-// function onKeyDown(event){
-// 	// check if pressed key exists in keys object
-// 	if (keys[event.key]){
-// 		console.log(" \n ONKEYDOWN volume is " + audioParams[3] + "\n");
-// 		var newShape = keys[event.key].shape((audioParams[3] * 300) + 75);
-// 		newShape.fillColor = keys[event.key].color;
-// 		shapes.push(newShape);
-// 	} else {
-// 		console.log("You pressed the " + event.key + " which does not exist in the keys object.");
-// 	}	
-// }
-
-// function onFrame(event){
-// 	myFFT();
-// 	// decrement loop to avoid splice() fuckery
-// 	for (var i = shapes.length - 1; i >= 0; i--){
-// 		shapes[i].fillColor.hue += audioParams[0] * .05;
-// 		shapes[i].scale(map(audioParams[3], 0, 1, .8, 5));
-// 		if (shapes[i].area < 1){
-// 			shapes[i].remove();
-// 			shapes.splice(i, 1);
-// 		}
-// 	}	 
-// }
