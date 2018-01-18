@@ -1,5 +1,6 @@
 // audio variables
-var hpFilter,
+var osc,
+	hpFilter,
 	hpCutoff,
 	lpFilter,
 	lpCutoff,
@@ -9,7 +10,8 @@ var hpFilter,
 	mid,
 	high,
 	amplitude,
-	audioParams = [];
+	audioParams = [],
+	playing = false;
 
 // other variables
 var canvas,
@@ -22,19 +24,28 @@ var canvas,
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
 	centerCanvas();
+
+	osc = new p5.Oscillator();
+	osc.setType("sawtooth");
+	osc.start();
+
 	hpFilter = new p5.HighPass();
 	lpFilter = new p5.LowPass();
+	
 	amplitude = new p5.Amplitude();
 	fft = new p5.FFT();
+	
 	resetFilters();
 }
 
 function draw(){
 	myFFT();
-}
 
-function keyPressed(){
-
+	if (keyIsPressed === true){
+		osc.amp(1);
+	} else {
+		osc.amp(0);
+	}
 }
 
 function mouseDragged(){
@@ -43,10 +54,8 @@ function mouseDragged(){
 	// LFP controls
 	if (mouseButton === LEFT){
 		
-		for (var i = 0; i < sounds.length; i++){
-			sounds[i].disconnect();
-			sounds[i].connect(hpFilter)
-		}
+		osc.disconnect();
+		osc.connect(hpFilter)
 
 		hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
 		hpFilter.freq(hpCutoff);
@@ -56,12 +65,10 @@ function mouseDragged(){
 
 	// HFP controls
 	else if (mouseButton === RIGHT){
-		
-		for (var i = 0; i < sounds.length; i++){
-			sounds[i].disconnect();
-			sounds[i].connect(lpFilter)
-		}
-		
+	
+		osc.disconnect();
+		osc.connect(lpFilter);
+
 		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
