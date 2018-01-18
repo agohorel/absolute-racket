@@ -1,5 +1,6 @@
 // audio variables
 var osc,
+	pitch,
 	hpFilter,
 	hpCutoff,
 	lpFilter,
@@ -11,15 +12,27 @@ var osc,
 	high,
 	amplitude,
 	audioParams = [],
-	playing = false;
+	lastPressedKey,
+	validKey;
+
+var notes = {
+	z: 130.81,
+	s: 138.59,
+	x: 146.83,
+	d: 155.56,
+	c: 164.81,
+	v: 174.61,
+	g: 185,
+	b: 196,
+	h: 207.65,
+	n: 220,
+	j: 233.08,
+	m: 246.94,
+	"¼": 261.63
+}
 
 // other variables
-var canvas,
-	x,
-	y,
-	vector, 
-	shapes = [],
-	lastPressedKey = "";
+var canvas;
 
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
@@ -40,12 +53,30 @@ function setup(){
 
 function draw(){
 	myFFT();
+	
+	osc.freq(pitch);
 
-	if (keyIsPressed === true){
+	if (validKey === true){
 		osc.amp(1);
 	} else {
 		osc.amp(0);
 	}
+}
+
+function keyPressed(){
+	lastPressedKey = key.toLowerCase();
+
+	if (notes[lastPressedKey]){
+		validKey = true;
+		pitch = notes[lastPressedKey];
+	} else {
+		validKey = false;
+		osc.amp(0);
+	}
+}
+
+function keyReleased(){
+	validKey = false;
 }
 
 function mouseDragged(){
@@ -53,7 +84,6 @@ function mouseDragged(){
 
 	// LFP controls
 	if (mouseButton === LEFT){
-		
 		osc.disconnect();
 		osc.connect(hpFilter)
 
@@ -65,7 +95,6 @@ function mouseDragged(){
 
 	// HFP controls
 	else if (mouseButton === RIGHT){
-	
 		osc.disconnect();
 		osc.connect(lpFilter);
 
@@ -73,7 +102,7 @@ function mouseDragged(){
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
 		//console.log("cutoff is: " + lpCutoff + " resonance is: " + q);
-	}	
+	}
 }
 
 function mouseReleased(){
