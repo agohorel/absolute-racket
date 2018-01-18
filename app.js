@@ -1,4 +1,4 @@
-/////////////////// p5.js stuff ///////////////////
+// audio variables
 var hpFilter,
 	hpCutoff,
 	lpFilter,
@@ -11,34 +11,42 @@ var hpFilter,
 	amplitude,
 	audioParams = [];
 
+// other variables
 var canvas,
 	x,
 	y,
 	vector, 
-	shapes = [];
+	shapes = [],
+	lastPressedKey = "";
 
 var keys = {
 	z: {
 		shape: function(shapeSize){
 			makeVector();
-			sounds[0].play();
 			return rect(vector.x, vector.y, shapeSize, shapeSize);
+		},
+		sound: function(){
+			sounds[0].play();
 		},
 		color: "#FF0000"
 	},
 	x: {
 		shape: function(shapeSize){
 			makeVector();
+			return rect(vector.x, vector.y, shapeSize, shapeSize/2);
+		},
+		sound: function(){
 			sounds[1].play();
-			return rect(vector.x, vector.y, shapeSize, shapeSize);
 		},
 		color: "#00FF00"
 	},
 	c: {
 		shape: function(shapeSize){
 			makeVector();
-			sounds[2].play();
 			return ellipse(vector.x, vector.y, shapeSize);
+		},
+		sound: function(){
+			sounds[2].play();
 		},
 		color: "#0000FF"
 	}
@@ -64,15 +72,24 @@ function setup(){
 
 function draw(){
 	myFFT();
+
+	// loop through all sounds and check if any are playing
+	for (var i = 0; i < sounds.length; i++){
+		if (sounds[i].isPlaying()){
+			// spawn selected shape and pass in volume as size param
+			keys[lastPressedKey].shape(volume * 200);
+		}
+	}
 }
 
 function keyPressed(){
-	var lowercaseKey = key.toLowerCase();
+	lastPressedKey = key.toLowerCase();
 	// check if pressed key exists in keys object
-	if (keys[lowercaseKey]){
-		console.log(key);
-		var newShape = keys[lowercaseKey].shape((audioParams[3] * 300) + 75);
+	if (keys[lastPressedKey]){
+		keys[lastPressedKey].sound();
+		var newShape = keys[lastPressedKey].shape(100);
 		shapes.push(newShape);
+		return lastPressedKey;
 	} else {
 		console.log("you pressed the " + key + " key, which doesn't exist in the keys object.");
 	}
@@ -120,7 +137,7 @@ function myFFT(){
 	bass = fft.getEnergy("bass");
 	mid = fft.getEnergy("mid");
 	high = fft.getEnergy("treble");
-	console.log("volume: " + volume + " bass: " + bass + " mid: " + mid + " hi: " + high);
+	//console.log("volume: " + volume + " bass: " + bass + " mid: " + mid + " hi: " + high);
 	return audioParams = [bass, mid, high, volume];
 }
 
