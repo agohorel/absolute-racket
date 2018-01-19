@@ -39,6 +39,12 @@ var oscTypes = {
 	"4": "sawtooth"
 }
 
+var noiseTypes = {
+	"5": "white",
+	"6": "pink",
+	"7": "brown"
+}
+
 // other variables
 var canvas;
 
@@ -103,6 +109,10 @@ function keyPressed(){
 	// set oscillator type
 	else if (oscTypes[key]){
 		osc.setType(oscTypes[key]);
+	}
+	// set noise type
+	else if (noiseTypes[key]){
+		noise.setType(noiseTypes[key]);
 	}
 	// if key is invalid, ignore it & mute
 	else {
