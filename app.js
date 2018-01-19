@@ -1,5 +1,7 @@
-/////////////////// p5.js stuff ///////////////////
-var hpFilter,
+// audio variables
+var osc,
+	pitch,
+	hpFilter,
 	hpCutoff,
 	lpFilter,
 	lpCutoff,
@@ -9,23 +11,83 @@ var hpFilter,
 	mid,
 	high,
 	amplitude,
-	audioParams = [];
+	audioParams = [],
+	lastPressedKey,
+	validKey;
 
-hpFilter = new p5.HighPass();
-lpFilter = new p5.LowPass();
-amplitude = new p5.Amplitude();
-fft = new p5.FFT();
-
-function preload(){
-	var kick = loadSound("./audio/kick.wav"),
-		snare = loadSound("./audio/snare.wav"),
-		hat = loadSound("./audio/hat.wav");
-	return sounds = [kick, snare, hat];
+var notes = {
+	z: 130.81,
+	s: 138.59,
+	x: 146.83,
+	d: 155.56,
+	c: 164.81,
+	v: 174.61,
+	g: 185,
+	b: 196,
+	h: 207.65,
+	n: 220,
+	j: 233.08,
+	m: 246.94,
+	"¼": 261.63
 }
 
+// other variables
+var canvas;
+
 function setup(){
-	soundFormats("wav", "ogg");
+	canvas = createCanvas(windowWidth, windowHeight);
+	centerCanvas();
+	noSmooth();
+
+	osc = new p5.Oscillator();
+	osc.setType("sawtooth");
+	osc.start();
+
+	hpFilter = new p5.HighPass();
+	lpFilter = new p5.LowPass();
+	
+	amplitude = new p5.Amplitude();
+	fft = new p5.FFT();
+	
 	resetFilters();
+}
+
+function draw(){
+	myFFT();
+	
+	osc.freq(pitch);
+
+	if (validKey === true){
+		osc.amp(1);
+	} else {
+		osc.amp(0);
+	}
+
+	background(0);
+	noStroke();
+	fill(bass, mid, high);
+
+	for (var i = 0; i < spectrum.length/2; i++){
+		var x = map(i, 0, spectrum.length, 0, width * 2);
+		var h = -height + map(spectrum[i], 0, 255, height, 0);
+		rect(x, height, width/spectrum.length, h);
+	}
+}
+
+function keyPressed(){
+	lastPressedKey = key.toLowerCase();
+
+	if (notes[lastPressedKey]){
+		validKey = true;
+		pitch = notes[lastPressedKey];
+	} else {
+		validKey = false;
+		osc.amp(0);
+	}
+}
+
+function keyReleased(){
+	validKey = false;
 }
 
 function mouseDragged(){
@@ -33,11 +95,8 @@ function mouseDragged(){
 
 	// LFP controls
 	if (mouseButton === LEFT){
-		
-		for (var i = 0; i < sounds.length; i++){
-			sounds[i].disconnect();
-			sounds[i].connect(hpFilter)
-		}
+		osc.disconnect();
+		osc.connect(hpFilter)
 
 		hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
 		hpFilter.freq(hpCutoff);
@@ -47,17 +106,14 @@ function mouseDragged(){
 
 	// HFP controls
 	else if (mouseButton === RIGHT){
-		
-		for (var i = 0; i < sounds.length; i++){
-			sounds[i].disconnect();
-			sounds[i].connect(lpFilter)
-		}
-		
+		osc.disconnect();
+		osc.connect(lpFilter);
+
 		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
 		//console.log("cutoff is: " + lpCutoff + " resonance is: " + q);
-	}	
+	}
 }
 
 function mouseReleased(){
@@ -66,11 +122,11 @@ function mouseReleased(){
 
 function myFFT(){
 	spectrum = fft.analyze();
-	volume = amplitude.getLevel() * 300;
+	volume = amplitude.getLevel();
 	bass = fft.getEnergy("bass");
 	mid = fft.getEnergy("mid");
 	high = fft.getEnergy("treble");
-	console.log("volume: " + volume + " bass: " + bass + " mid: " + mid + " hi: " + high);
+	//console.log("volume: " + volume + " bass: " + bass + " mid: " + mid + " hi: " + high);
 	return audioParams = [bass, mid, high, volume];
 }
 
@@ -84,64 +140,20 @@ function resetFilters(){
 	lpFilter.res(q);
 }
 
-/////////////////// paper.js stuff ///////////////////
-
-var shapes = [];
-
-function onKeyDown(event){
-	// check if pressed key exists in keys object
-	if (keys[event.key]){
-		console.log(" \n ONKEYDOWN volume is " + audioParams[3] + "\n");
-		var newShape = keys[event.key].shape(audioParams[3] + 75);
-		newShape.fillColor = keys[event.key].color;
-		shapes.push(newShape);
-	} else {
-		console.log("You pressed the " + event.key + " which does not exist in the keys object.");
-	}	
+function centerCanvas() {
+	var x = (windowWidth - width) / 2;
+	var y = (windowHeight - height) / 2;
+	canvas.position(x, y);
 }
 
-function onFrame(event){
-	myFFT();
-	// decrement loop to avoid splice() fuckery
-	for (var i = shapes.length - 1; i >= 0; i--){
-		shapes[i].fillColor.hue += audioParams[0] * .05;
-		shapes[i].scale(.9);
-		if (shapes[i].area < 1){
-			shapes[i].remove();
-			shapes.splice(i, 1);
-		}
-	}	 
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+	centerCanvas();
 }
 
-var keys = {
-	z: {
-		shape: function(shapeSize){
-			randomCoords();
-			sounds[0].play();
-			return Path.Circle(coords, shapeSize);
-		},
-		color: "#FF0000"
-	},
-	x: {
-		shape: function(shapeSize){
-			randomCoords();
-			sounds[1].play();
-			return Path.Rectangle(coords, shapeSize, shapeSize);
-		},
-		color: "#00FF00"
-	},
-	c: {
-		shape: function(shapeSize){
-			randomCoords();
-			sounds[2].play();
-			return Path.RegularPolygon(coords, 3, shapeSize);
-		},
-		color: "#0000FF"
-	}
-}
-
-function randomCoords(){
-	var x = Math.random() * view.size.width;
-	var y = Math.random() * view.size.height;
-	return coords = new Point(x, y);
+function makeVector(){
+	x = Math.random() * windowWidth;
+	y = Math.random() * windowHeight;
+	vector = createVector(x, y);
+	return vector;
 }
