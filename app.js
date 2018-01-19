@@ -11,7 +11,6 @@ var osc,
 	mid,
 	high,
 	amplitude,
-	audioParams = [],
 	lastPressedKey,
 	validKey;
 
@@ -72,8 +71,10 @@ function draw(){
 
 	background(0);
 	noStroke();
+	// set spectrum colors based on freq
 	fill(bass, mid, high);
 
+	// draw the spectrum
 	for (var i = 0; i < spectrum.length/2; i++){
 		var x = map(i, 0, spectrum.length, 0, width * 2);
 		var h = -height + map(spectrum[i], 0, 255, height, 0);
@@ -84,15 +85,16 @@ function draw(){
 function keyPressed(){
 	lastPressedKey = key.toLowerCase();
 
+	// set pitch
 	if (notes[lastPressedKey]){
 		validKey = true;
 		pitch = notes[lastPressedKey];
 	} 
-
+	// set oscillator type
 	else if (oscTypes[key]){
 		osc.setType(oscTypes[key]);
 	}
-
+	// if key is invalid, ignore it & mute
 	else {
 		validKey = false;
 		osc.amp(0);
@@ -111,10 +113,9 @@ function mouseDragged(){
 		osc.disconnect();
 		osc.connect(hpFilter)
 
-		hpCutoff = map(mouseX, 0, windowWidth, 20, 10000);
+		hpCutoff = map(mouseX, 0, windowWidth, 0, 10000);
 		hpFilter.freq(hpCutoff);
 		hpFilter.res(q);
-		console.log("cutoff is: " + hpCutoff + " resonance is: " + q);
 	}
 
 	// HFP controls
@@ -125,7 +126,6 @@ function mouseDragged(){
 		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
-		//console.log("cutoff is: " + lpCutoff + " resonance is: " + q);
 	}
 }
 
@@ -133,6 +133,7 @@ function mouseReleased(){
 	resetFilters();
 }
 
+// audio analysis stuff
 function myFFT(){
 	spectrum = fft.analyze();
 	volume = amplitude.getLevel();
@@ -140,9 +141,9 @@ function myFFT(){
 	mid = fft.getEnergy("mid");
 	high = fft.getEnergy("treble");
 	//console.log("volume: " + volume + " bass: " + bass + " mid: " + mid + " hi: " + high);
-	return audioParams = [bass, mid, high, volume];
 }
 
+// initialize/reset filter parameters
 function resetFilters(){
 	hpCutoff = 0;
 	lpCutoff = 20000;
@@ -153,20 +154,15 @@ function resetFilters(){
 	lpFilter.res(q);
 }
 
-function centerCanvas() {
-	var x = (windowWidth - width) / 2;
-	var y = (windowHeight - height) / 2;
-	canvas.position(x, y);
-}
-
+// resize canvas if window is resized
 function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
 	centerCanvas();
 }
 
-function makeVector(){
-	x = Math.random() * windowWidth;
-	y = Math.random() * windowHeight;
-	vector = createVector(x, y);
-	return vector;
+// re-center canvas if the window is resized
+function centerCanvas() {
+	var x = (windowWidth - width) / 2;
+	var y = (windowHeight - height) / 2;
+	canvas.position(x, y);
 }
