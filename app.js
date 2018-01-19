@@ -13,8 +13,7 @@ var osc,
 	amplitude,
 	audioParams = [],
 	lastPressedKey,
-	validKey,
-	chord = [];
+	validKey;
 
 var notes = {
 	z: 130.81,
@@ -62,15 +61,10 @@ function draw(){
 	} else {
 		osc.amp(0);
 	}
-
-	if (chord.length > 0){
-		console.log(chord);
-	}
 }
 
 function keyPressed(){
 	lastPressedKey = key.toLowerCase();
-	chord.push(lastPressedKey);
 
 	if (notes[lastPressedKey]){
 		validKey = true;
@@ -83,7 +77,6 @@ function keyPressed(){
 
 function keyReleased(){
 	validKey = false;
-	chord.pop();
 }
 
 function mouseDragged(){
