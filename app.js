@@ -1,6 +1,7 @@
 // audio variables
 var osc,
 	noise,
+	noiseAmount = 0,
 	pitch,
 	hpFilter,
 	hpCutoff,
@@ -51,6 +52,7 @@ function setup(){
 	osc.start();
 
 	noise = new p5.Noise;
+	noise.start();
 
 	hpFilter = new p5.HighPass();
 	lpFilter = new p5.LowPass();
@@ -65,6 +67,7 @@ function draw(){
 	myFFT();
 	
 	osc.freq(pitch);
+	noise.amp(noiseAmount);
 
 	if (validKey === true){
 		osc.amp(1);
@@ -109,6 +112,13 @@ function keyPressed(){
 
 function keyReleased(){
 	validKey = false;
+}
+
+function mouseWheel(event){
+	console.log(event.delta * -1)
+	noiseAmount += (event.delta * -1) / 10000;
+	noiseAmount = constrain(noiseAmount, 0, 1);
+	console.log(noiseAmount);
 }
 
 function mouseDragged(){
