@@ -67,12 +67,13 @@ function draw(){
 	myFFT();
 	
 	osc.freq(pitch);
-	noise.amp(noiseAmount);
 
 	if (validKey === true){
 		osc.amp(1);
+		noise.amp(noiseAmount);
 	} else {
 		osc.amp(0);
+		noise.amp(0);
 	}
 
 	fill(0, 80);
@@ -107,6 +108,7 @@ function keyPressed(){
 	else {
 		validKey = false;
 		osc.amp(0);
+		noise.amp(0);
 	}
 }
 
