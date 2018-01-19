@@ -72,7 +72,8 @@ function draw(){
 		osc.amp(0);
 	}
 
-	background(0);
+	fill(0, 80);
+	rect(0, 0, width, height);
 
 	noStroke();
 
