@@ -37,6 +37,7 @@ var canvas;
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
 	centerCanvas();
+	noSmooth();
 
 	osc = new p5.Oscillator();
 	osc.setType("sawtooth");
@@ -60,6 +61,14 @@ function draw(){
 		osc.amp(1);
 	} else {
 		osc.amp(0);
+	}
+
+	background(255);
+
+	for (var i = 0; i < spectrum.length/2; i++){
+		var x = map(i, 0, spectrum.length, 0, width * 2);
+		var h = -height + map(spectrum[i], 0, 255, height, 0);
+		rect(x, height, width/spectrum.length, h);
 	}
 }
 
