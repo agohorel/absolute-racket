@@ -63,7 +63,9 @@ function draw(){
 		osc.amp(0);
 	}
 
-	background(255);
+	background(0);
+	noStroke();
+	fill(bass, mid, high);
 
 	for (var i = 0; i < spectrum.length/2; i++){
 		var x = map(i, 0, spectrum.length, 0, width * 2);
