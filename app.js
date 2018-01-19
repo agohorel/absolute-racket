@@ -155,7 +155,7 @@ function mouseDragged(){
 		noise.disconnect();
 		noise.connect(lpFilter);
 
-		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
+		lpCutoff = map(mouseX, 0, windowWidth, 20, 20000);
 		lpFilter.freq(lpCutoff);
 		lpFilter.res(q);
 	}
