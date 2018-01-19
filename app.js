@@ -1,5 +1,6 @@
 // audio variables
 var osc,
+	noise,
 	pitch,
 	hpFilter,
 	hpCutoff,
@@ -49,6 +50,8 @@ function setup(){
 	osc.setType("sawtooth");
 	osc.start();
 
+	noise = new p5.Noise;
+
 	hpFilter = new p5.HighPass();
 	lpFilter = new p5.LowPass();
 	
@@ -70,7 +73,9 @@ function draw(){
 	}
 
 	background(0);
+
 	noStroke();
+
 	// set spectrum colors based on freq
 	fill(bass, mid, high);
 
@@ -112,6 +117,8 @@ function mouseDragged(){
 	if (mouseButton === LEFT){
 		osc.disconnect();
 		osc.connect(hpFilter)
+		noise.disconnect();
+		noise.connect(hpFilter);
 
 		hpCutoff = map(mouseX, 0, windowWidth, 0, 10000);
 		hpFilter.freq(hpCutoff);
@@ -122,6 +129,8 @@ function mouseDragged(){
 	else if (mouseButton === RIGHT){
 		osc.disconnect();
 		osc.connect(lpFilter);
+		noise.disconnect();
+		noise.connect(lpFilter);
 
 		lpCutoff = map(mouseX, 0, windowWidth, 20000, 20);
 		lpFilter.freq(lpCutoff);
