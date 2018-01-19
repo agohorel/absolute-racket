@@ -31,6 +31,13 @@ var notes = {
 	"¼": 261.63
 }
 
+var oscTypes = {
+	"1": "sine",
+	"2": "triangle",
+	"3": "square",
+	"4": "sawtooth"
+}
+
 // other variables
 var canvas;
 
@@ -80,7 +87,13 @@ function keyPressed(){
 	if (notes[lastPressedKey]){
 		validKey = true;
 		pitch = notes[lastPressedKey];
-	} else {
+	} 
+
+	else if (oscTypes[key]){
+		osc.setType(oscTypes[key]);
+	}
+
+	else {
 		validKey = false;
 		osc.amp(0);
 	}
