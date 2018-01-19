@@ -111,7 +111,7 @@ function mouseDragged(){
 		osc.disconnect();
 		osc.connect(hpFilter)
 
-		hpCutoff = map(mouseX, 0, windowWidth, 20, 1000);
+		hpCutoff = map(mouseX, 0, windowWidth, 20, 10000);
 		hpFilter.freq(hpCutoff);
 		hpFilter.res(q);
 		console.log("cutoff is: " + hpCutoff + " resonance is: " + q);
