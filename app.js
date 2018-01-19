@@ -1,6 +1,6 @@
 // audio variables
 var osc,
-	noise,
+	noiseOsc,
 	noiseAmount = 0,
 	pitch,
 	hpFilter,
@@ -57,8 +57,8 @@ function setup(){
 	osc.setType("sawtooth");
 	osc.start();
 
-	noise = new p5.Noise;
-	noise.start();
+	noiseOsc = new p5.Noise;
+	noiseOsc.start();
 
 	hpFilter = new p5.HighPass();
 	lpFilter = new p5.LowPass();
@@ -76,10 +76,10 @@ function draw(){
 
 	if (validKey === true){
 		osc.amp(1);
-		noise.amp(noiseAmount);
+		noiseOsc.amp(noiseAmount);
 	} else {
 		osc.amp(0);
-		noise.amp(0);
+		noiseOsc.amp(0);
 	}
 
 	fill(0, 80);
@@ -112,13 +112,13 @@ function keyPressed(){
 	}
 	// set noise type
 	else if (noiseTypes[key]){
-		noise.setType(noiseTypes[key]);
+		noiseOsc.setType(noiseTypes[key]);
 	}
 	// if key is invalid, ignore it & mute
 	else {
 		validKey = false;
 		osc.amp(0);
-		noise.amp(0);
+		noiseOsc.amp(0);
 	}
 }
 
@@ -127,10 +127,9 @@ function keyReleased(){
 }
 
 function mouseWheel(event){
-	console.log(event.delta * -1)
+	// mouse wheel controls volume of noise
 	noiseAmount += (event.delta * -1) / 10000;
 	noiseAmount = constrain(noiseAmount, 0, 1);
-	console.log(noiseAmount);
 }
 
 function mouseDragged(){
@@ -140,8 +139,8 @@ function mouseDragged(){
 	if (mouseButton === LEFT){
 		osc.disconnect();
 		osc.connect(hpFilter)
-		noise.disconnect();
-		noise.connect(hpFilter);
+		noiseOsc.disconnect();
+		noiseOsc.connect(hpFilter);
 
 		hpCutoff = map(mouseX, 0, windowWidth, 0, 10000);
 		hpFilter.freq(hpCutoff);
@@ -152,8 +151,8 @@ function mouseDragged(){
 	else if (mouseButton === RIGHT){
 		osc.disconnect();
 		osc.connect(lpFilter);
-		noise.disconnect();
-		noise.connect(lpFilter);
+		noiseOsc.disconnect();
+		noiseOsc.connect(lpFilter);
 
 		lpCutoff = map(mouseX, 0, windowWidth, 20, 20000);
 		lpFilter.freq(lpCutoff);
