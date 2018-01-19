@@ -134,7 +134,7 @@ function mouseWheel(event){
 }
 
 function mouseDragged(){
-	q = map(mouseY, 0, windowHeight, 5, .001);
+	q = map(mouseY, 0, windowHeight, 20, 0);
 
 	// LFP controls
 	if (mouseButton === LEFT){
