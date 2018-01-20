@@ -17,32 +17,32 @@ var osc,
 	validKey;
 
 var notes = {
-	z: 130.81,
-	s: 138.59,
-	x: 146.83,
-	d: 155.56,
-	c: 164.81,
-	v: 174.61,
-	g: 185,
-	b: 196,
-	h: 207.65,
-	n: 220,
-	j: 233.08,
-	m: 246.94,
-	"¼": 261.63
+	90: 130.81,
+	83: 138.59,
+	88: 146.83,
+	68: 155.56,
+	67: 164.81,
+	86: 174.61,
+	71: 185,
+	66: 196,
+	72: 207.65,
+	78: 220,
+	74: 233.08,
+	77: 246.94,
+	188: 261.63,
 }
 
 var oscTypes = {
-	"1": "sine",
-	"2": "triangle",
-	"3": "square",
-	"4": "sawtooth"
+	49: "sine",
+	50: "triangle",
+	51: "square",
+	52: "sawtooth"
 }
 
 var noiseTypes = {
-	"5": "white",
-	"6": "pink",
-	"7": "brown"
+	53: "white",
+	54: "pink",
+	55: "brown"
 }
 
 // other variables
@@ -71,7 +71,7 @@ function setup(){
 
 function draw(){
 	myFFT();
-	
+
 	osc.freq(pitch);
 
 	if (validKey === true){
@@ -102,17 +102,17 @@ function keyPressed(){
 	lastPressedKey = key.toLowerCase();
 
 	// set pitch
-	if (notes[lastPressedKey]){
+	if (notes[keyCode]){
 		validKey = true;
-		pitch = notes[lastPressedKey];
+		pitch = notes[keyCode];
 	} 
 	// set oscillator type
-	else if (oscTypes[key]){
-		osc.setType(oscTypes[key]);
+	else if (oscTypes[keyCode]){
+		osc.setType(oscTypes[keyCode]);
 	}
 	// set noise type
-	else if (noiseTypes[key]){
-		noiseOsc.setType(noiseTypes[key]);
+	else if (noiseTypes[keyCode]){
+		noiseOsc.setType(noiseTypes[keyCode]);
 	}
 	// if key is invalid, ignore it & mute
 	else {
