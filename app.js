@@ -180,6 +180,10 @@ function resetFilters(){
 	lpFilter.freq(lpCutoff);
 	hpFilter.res(q);
 	lpFilter.res(q);
+	osc.disconnect();
+	osc.connect();
+	noiseOsc.disconnect();
+	noiseOsc.connect();
 }
 
 // resize canvas if window is resized
