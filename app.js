@@ -220,6 +220,7 @@ function resetFilters(){
 function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
 	centerCanvas();
+	background(0);
 }
 
 // re-center canvas if the window is resized
