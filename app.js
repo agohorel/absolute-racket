@@ -4,7 +4,7 @@ var osc,
 	noiseAmount = 0,
 	attackLevel = 1.0,
 	releaseLevel = 0,
-	attack = 0.001,
+	attack = 0.0,
 	decay = 0.2,
 	sustain = 0.2,
 	release = 0.5,
@@ -51,6 +51,13 @@ var noiseTypes = {
 	55: "brown"
 }
 
+var envelopeControls = {
+	37: -.01,
+	39: .01,
+	40: -.1,
+	38: .1
+}
+
 // other variables
 var canvas;
 
@@ -87,7 +94,7 @@ function draw(){
 
 	if (validKey === true){
 		envelope.play();
-		print(envelope);
+		print(attack, release, envelope);
 		osc.amp(envelope);
 		noiseOsc.amp(noiseAmount);
 	} else {
@@ -124,6 +131,15 @@ function keyPressed(){
 	// set noise type
 	else if (noiseTypes[keyCode]){
 		noiseOsc.setType(noiseTypes[keyCode]);
+	}
+	// set envelope
+	else if (envelopeControls[keyCode]){
+		if (keyCode === 37 || keyCode === 39){
+			attack += envelopeControls[keyCode];
+		}
+		else if (keyCode === 38 || keyCode === 40){
+			release += envelopeControls[keyCode];
+		}
 	}
 	// if key is invalid, ignore it & mute
 	else {
