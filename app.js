@@ -13,7 +13,6 @@ var osc,
 	mid,
 	high,
 	amplitude,
-	lastPressedKey,
 	validKey;
 
 var notes = {
@@ -64,7 +63,7 @@ function setup(){
 	lpFilter = new p5.LowPass();
 	
 	amplitude = new p5.Amplitude();
-	fft = new p5.FFT();
+	fft = new p5.FFT(0.9, 512);
 	
 	resetFilters();
 }
@@ -91,16 +90,14 @@ function draw(){
 	fill(bass, mid, high);
 
 	// draw the spectrum
-	for (var i = 0; i < spectrum.length/2; i++){
-		var x = map(i, 0, spectrum.length, 0, width * 2);
+	for (var i = 0; i < spectrum.length; i++){
+		var x = map(i, 0, spectrum.length, 0, width);
 		var h = -height + map(spectrum[i], 0, 255, height, 0);
 		rect(x, height, width/spectrum.length, h);
 	}
 }
 
 function keyPressed(){
-	lastPressedKey = key.toLowerCase();
-
 	// set pitch
 	if (notes[keyCode]){
 		validKey = true;
