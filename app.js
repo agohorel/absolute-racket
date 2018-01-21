@@ -2,6 +2,13 @@
 var osc,
 	noiseOsc,
 	noiseAmount = 0,
+	attackLevel = 1.0,
+	releaseLevel = 0,
+	attack = 0.001,
+	decay = 0.2,
+	sustain = 0.2,
+	release = 0.5,
+	envelope,
 	pitch,
 	hpFilter,
 	hpCutoff,
@@ -56,6 +63,8 @@ function setup(){
 	osc.setType("sawtooth");
 	osc.start();
 
+	envelope = new p5.Env();
+
 	noiseOsc = new p5.Noise;
 	noiseOsc.start();
 
@@ -69,12 +78,17 @@ function setup(){
 }
 
 function draw(){
-	myFFT();
+	envelope.setADSR(attack, decay, sustain, release);
+	envelope.setRange(attackLevel, releaseLevel);
 
 	osc.freq(pitch);
 
+	myFFT();
+
 	if (validKey === true){
-		osc.amp(1);
+		envelope.play();
+		print(envelope);
+		osc.amp(envelope);
 		noiseOsc.amp(noiseAmount);
 	} else {
 		osc.amp(0);
