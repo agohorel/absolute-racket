@@ -83,7 +83,7 @@ function draw(){
 		envelope.play();
 		print(attack, release, envelope);
 		osc.amp(envelope);
-		noiseOsc.amp(noiseAmount);
+		noiseOsc.amp(envelope.scale(noiseAmount));
 	} else {
 		osc.amp(0);
 		noiseOsc.amp(0);
