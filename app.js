@@ -9,6 +9,7 @@ var osc,
 	sustain = 0.2,
 	release = 0.5,
 	envelope,
+	noiseEnvelope,
 	pitch,
 	hpFilter,
 	hpCutoff,
@@ -58,6 +59,7 @@ function setup(){
 	osc.start();
 
 	envelope = new p5.Env();
+	noiseEnvelope = new p5.Env();
 
 	noiseOsc = new p5.Noise;
 	noiseOsc.start();
@@ -74,6 +76,9 @@ function setup(){
 function draw(){
 	envelope.setADSR(attack, decay, sustain, release);
 	envelope.setRange(attackLevel, releaseLevel);
+	noiseEnvelope.setADSR(attack, decay, sustain, release);
+	noiseEnvelope.setRange(attackLevel, releaseLevel);
+	noiseEnvelope.mult(noiseAmount);
 
 	osc.freq(pitch);
 
@@ -81,9 +86,9 @@ function draw(){
 
 	if (validKey === true){
 		envelope.play();
-		print(attack, release, envelope);
 		osc.amp(envelope);
-		noiseOsc.amp(envelope.scale(noiseAmount));
+		noiseEnvelope.play();
+		noiseOsc.amp(noiseEnvelope);
 	} else {
 		osc.amp(0);
 		noiseOsc.amp(0);
