@@ -38,12 +38,6 @@ var notes = {
 	188: 261.63,
 }
 
-var noiseTypes = {
-	53: "white",
-	54: "pink",
-	55: "brown"
-}
-
 var envelopeControls = {
 	37: -.01,
 	39: .01,
@@ -117,10 +111,6 @@ function keyPressed(){
 		validKey = true;
 		pitch = notes[keyCode];
 	} 
-	// set noise type
-	else if (noiseTypes[keyCode]){
-		noiseOsc.setType(noiseTypes[keyCode]);
-	}
 	// set envelope
 	else if (envelopeControls[keyCode]){
 		if (keyCode === 37 || keyCode === 39){
@@ -234,8 +224,17 @@ for (var i = 0; i < buttons.length; i++){
 		else if (this.innerText === "Square"){
 			osc.setType("square");
 		}
-		else {
+		else if (this.innerText === "Sawtooth"){
 			osc.setType("sawtooth");
+		}
+		else if (this.innerText === "White"){
+			noiseOsc.setType("white");
+		}
+		else if (this.innerText === "Pink"){
+			noiseOsc.setType("pink");
+		}
+		else if (this.innerText === "Brown"){
+			noiseOsc.setType("brown");
 		}
 	});
 }
