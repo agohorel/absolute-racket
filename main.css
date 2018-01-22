@@ -1,0 +1,12 @@
+body {
+	font-family: monospace;
+}
+
+#myCanvas {
+	z-index: 0;
+}
+
+.container {
+	position: absolute;
+	z-index: 1;
+}

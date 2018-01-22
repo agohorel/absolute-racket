@@ -38,13 +38,6 @@ var notes = {
 	188: 261.63,
 }
 
-var oscTypes = {
-	49: "sine",
-	50: "triangle",
-	51: "square",
-	52: "sawtooth"
-}
-
 var noiseTypes = {
 	53: "white",
 	54: "pink",
@@ -124,10 +117,6 @@ function keyPressed(){
 		validKey = true;
 		pitch = notes[keyCode];
 	} 
-	// set oscillator type
-	else if (oscTypes[keyCode]){
-		osc.setType(oscTypes[keyCode]);
-	}
 	// set noise type
 	else if (noiseTypes[keyCode]){
 		noiseOsc.setType(noiseTypes[keyCode]);
@@ -228,4 +217,25 @@ function centerCanvas() {
 	var x = (windowWidth - width) / 2;
 	var y = (windowHeight - height) / 2;
 	canvas.position(x, y);
+}
+
+// DOM/GUI stuff
+
+var buttons = document.querySelectorAll(".btn");
+
+for (var i = 0; i < buttons.length; i++){
+	buttons[i].addEventListener("click", function(){
+		if (this.innerText === "Sine"){
+			osc.setType("sine");
+		}
+		else if (this.innerText === "Triangle"){
+			osc.setType("triangle");
+		}
+		else if (this.innerText === "Square"){
+			osc.setType("square");
+		}
+		else {
+			osc.setType("sawtooth");
+		}
+	});
 }
