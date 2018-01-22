@@ -19,22 +19,25 @@
 </head>
 
 <body oncontextmenu="return false;">	
-	<canvas id="myCanvas" resize></canvas>
-
-	<div class="container">
-		<div class="btn-group btn-group-toggle" data-toggle="buttons">
-			<label class="btn btn-secondary" for="sineWave">
-				<input type="radio" name="oscType" id="sineWave" autocomplete="off"> Sine
-			</label>
-			<label class="btn btn-secondary" for="triangleWave">
-				<input type="radio" name="oscType" id="triangleWave" autocomplete="off"> Triangle
-			</label>
-			<label class="btn btn-secondary" for="squareWave">
-				<input type="radio" name="oscType" id="squareWave" autocomplete="off"> Square
-			</label>
-			<label class="btn btn-secondary active" for="sawtoothWave">
-				<input type="radio" name="oscType" id="sawtoothWave" autocomplete="off" checked> Sawtooth
-			</label>
+	
+	<div id="main">
+		<div class="container">
+			<div class="row">
+				<div class="btn-group btn-group-toggle" data-toggle="buttons">
+					<label class="btn btn-secondary" for="sineWave">
+						<input type="radio" name="oscType" id="sineWave" autocomplete="off"> Sine
+					</label>
+					<label class="btn btn-secondary" for="triangleWave">
+						<input type="radio" name="oscType" id="triangleWave" autocomplete="off"> Triangle
+					</label>
+					<label class="btn btn-secondary" for="squareWave">
+						<input type="radio" name="oscType" id="squareWave" autocomplete="off"> Square
+					</label>
+					<label class="btn btn-secondary active" for="sawtoothWave">
+						<input type="radio" name="oscType" id="sawtoothWave" autocomplete="off" checked> Sawtooth
+					</label>
+				</div>
+			</div>
 		</div>
 	</div>
 
