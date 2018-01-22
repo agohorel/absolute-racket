@@ -7,6 +7,28 @@ body {
 	z-index: 1;
 }
 
-h5 {
+h6 {
+	padding-top: 10px;
+	margin-bottom: 2px;
 	color: white;
 }
+
+.btn-secondary {
+	background: black;
+}
+
+/*active buttons*/
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle {
+	background: #454545; 
+}
+
+/*hovered buttons*/
+.btn-secondary.hover, .btn-secondary:hover {
+	background: #343434;
+}
+
+/*remove box shadow from focused button*/
+.btn-secondary.focus, .btn-secondary:focus {
+	box-shadow: none;
+}
+
