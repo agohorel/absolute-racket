@@ -13,6 +13,12 @@ h6 {
 	color: white;
 }
 
+p {
+	padding-top: 10px;
+	margin-bottom: 2px;
+	color: white;
+}
+
 .btn-secondary {
 	background: black;
 }
