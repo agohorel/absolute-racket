@@ -139,11 +139,11 @@ function keyReleased(){
 	validKey = false;
 }
 
-function mouseWheel(event){
-	// mouse wheel controls volume of noise
-	noiseAmount += (event.delta * -1) / 10000;
-	noiseAmount = constrain(noiseAmount, 0, 1);
-}
+// function mouseWheel(event){
+// 	// mouse wheel controls volume of noise
+// 	noiseAmount += (event.delta * -1) / 10000;
+// 	noiseAmount = constrain(noiseAmount, 0, 1);
+// }
 
 function mouseDragged(){
 	q = map(mouseY, 0, windowHeight, 20, 0);
@@ -255,4 +255,8 @@ var noiseSlider = document.querySelector("#noiseSlider");
 
 volumeSlider.oninput = function() {
 	masterVolume(parseFloat(this.value));
+}
+
+noiseSlider.oninput = function() {
+	noiseAmount = parseFloat(this.value);
 }
