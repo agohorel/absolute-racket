@@ -257,6 +257,22 @@ volumeSlider.oninput = function() {
 	masterVolume(parseFloat(this.value));
 }
 
+attackSlider.oninput = function() {
+	attack = parseFloat(this.value);
+}
+
+decaySlider.oninput = function() {
+	decay = parseFloat(this.value);
+}
+
+sustainSlider.oninput = function() {
+	sustain = parseFloat(this.value);
+}
+
+releaseSlider.oninput = function() {
+	release = parseFloat(this.value);
+}
+
 noiseSlider.oninput = function() {
 	noiseAmount = parseFloat(this.value);
 }
