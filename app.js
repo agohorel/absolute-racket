@@ -247,6 +247,11 @@ for (var i = 0; i < buttons.length; i++){
 }
 
 var volumeSlider = document.querySelector("#volumeSlider");
+var attackSlider = document.querySelector("#attackSlider");
+var decaySlider = document.querySelector("#decaySlider");
+var sustainSlider = document.querySelector("#sustainSlider");
+var releaseSlider = document.querySelector("#releaseSlider");
+var noiseSlider = document.querySelector("#noiseSlider");
 
 volumeSlider.oninput = function() {
 	masterVolume(parseFloat(this.value));
