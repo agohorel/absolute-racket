@@ -243,3 +243,10 @@ for (var i = 0; i < buttons.length; i++){
 		}
 	});
 }
+
+var volumeSlider = document.querySelector("#volumeSlider");
+
+volumeSlider.oninput = function() {
+	console.log(this.value/100);
+	masterVolume(this.value/100);
+}
