@@ -54,6 +54,8 @@ function setup(){
 	centerCanvas();
 	noSmooth();
 
+	masterVolume(.5);
+
 	osc = new p5.Oscillator();
 	osc.setType("sawtooth");
 	osc.start();
@@ -247,6 +249,5 @@ for (var i = 0; i < buttons.length; i++){
 var volumeSlider = document.querySelector("#volumeSlider");
 
 volumeSlider.oninput = function() {
-	console.log(this.value/100);
 	masterVolume(this.value/100);
 }
