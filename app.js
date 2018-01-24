@@ -249,5 +249,5 @@ for (var i = 0; i < buttons.length; i++){
 var volumeSlider = document.querySelector("#volumeSlider");
 
 volumeSlider.oninput = function() {
-	masterVolume(this.value/100);
+	masterVolume(parseFloat(this.value));
 }
