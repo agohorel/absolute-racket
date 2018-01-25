@@ -21,7 +21,8 @@ var osc,
 	mid,
 	high,
 	amplitude,
-	validKey;
+	validKey,
+	mouseIsLocked = false;
 
 var notes = {
 	90: 130.81,
@@ -148,29 +149,32 @@ function keyReleased(){
 function mouseDragged(){
 	q = map(mouseY, 0, windowHeight, 20, 0);
 
-	// LFP controls
-	if (mouseButton === LEFT){
-		osc.disconnect();
-		osc.connect(hpFilter)
-		noiseOsc.disconnect();
-		noiseOsc.connect(hpFilter);
+	if (mouseIsLocked == false){
+		// LFP controls
+		if (mouseButton === LEFT){
+			osc.disconnect();
+			osc.connect(hpFilter)
+			noiseOsc.disconnect();
+			noiseOsc.connect(hpFilter);
 
-		hpCutoff = map(mouseX, 0, windowWidth, 0, 10000);
-		hpFilter.freq(hpCutoff);
-		hpFilter.res(q);
+			hpCutoff = map(mouseX, 0, windowWidth, 0, 10000);
+			hpFilter.freq(hpCutoff);
+			hpFilter.res(q);
+		}
+
+		// HFP controls
+		else if (mouseButton === RIGHT){
+			osc.disconnect();
+			osc.connect(lpFilter);
+			noiseOsc.disconnect();
+			noiseOsc.connect(lpFilter);
+
+			lpCutoff = map(mouseX, 0, windowWidth, 20, 20000);
+			lpFilter.freq(lpCutoff);
+			lpFilter.res(q);
+		}
 	}
 
-	// HFP controls
-	else if (mouseButton === RIGHT){
-		osc.disconnect();
-		osc.connect(lpFilter);
-		noiseOsc.disconnect();
-		noiseOsc.connect(lpFilter);
-
-		lpCutoff = map(mouseX, 0, windowWidth, 20, 20000);
-		lpFilter.freq(lpCutoff);
-		lpFilter.res(q);
-	}
 }
 
 function mouseReleased(){
@@ -257,22 +261,75 @@ volumeSlider.oninput = function() {
 	masterVolume(parseFloat(this.value));
 }
 
+volumeSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+volumeSlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
 attackSlider.oninput = function() {
+	mouseIsLocked = true;
 	attack = parseFloat(this.value);
 }
 
+attackSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+attackSlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
 decaySlider.oninput = function() {
+	mouseIsLocked = true;
 	decay = parseFloat(this.value);
 }
 
+decaySlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+decaySlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
 sustainSlider.oninput = function() {
+	mouseIsLocked = true;
 	sustain = parseFloat(this.value);
 }
 
+sustainSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+sustainSlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
 releaseSlider.oninput = function() {
+	mouseIsLocked = true;
 	release = parseFloat(this.value);
 }
 
+releaseSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+releaseSlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
 noiseSlider.oninput = function() {
+	mouseIsLocked = true;
 	noiseAmount = parseFloat(this.value);
+}
+
+noiseSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+noiseSlider.onmouseup = function() {
+	mouseIsLocked = false;
 }
