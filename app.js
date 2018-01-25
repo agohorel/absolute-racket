@@ -40,13 +40,6 @@ var notes = {
 	188: 261.63,
 }
 
-var envelopeControls = {
-	37: -.01,
-	39: .01,
-	40: -.1,
-	38: .1
-}
-
 // other variables
 var canvas;
 
@@ -119,15 +112,6 @@ function keyPressed(){
 		validKey = true;
 		pitch = notes[keyCode];
 	} 
-	// set envelope
-	else if (envelopeControls[keyCode]){
-		if (keyCode === 37 || keyCode === 39){
-			attack += envelopeControls[keyCode];
-		}
-		else if (keyCode === 38 || keyCode === 40){
-			release += envelopeControls[keyCode];
-		}
-	}
 	// if key is invalid, ignore it & mute
 	else {
 		validKey = false;
@@ -141,9 +125,7 @@ function keyReleased(){
 }
 
 // function mouseWheel(event){
-// 	// mouse wheel controls volume of noise
-// 	noiseAmount += (event.delta * -1) / 10000;
-// 	noiseAmount = constrain(noiseAmount, 0, 1);
+	// eventually put FX param controls here
 // }
 
 function mouseDragged(){
