@@ -3,6 +3,8 @@ var osc,
 	osc2,
 	oscOctave = 1, 
 	osc2Octave = 1,
+	osc1Detune = 0,
+	osc2Detune = 0,
 	noiseOsc,
 	noiseAmount = 0,
 	attackLevel = 1.0,
@@ -83,8 +85,8 @@ function draw(){
 	noiseEnvelope.setRange(attackLevel, releaseLevel);
 	noiseEnvelope.mult(noiseAmount);
 
-	osc.freq(pitch * oscOctave);
-	osc2.freq(pitch * osc2Octave);
+	osc.freq(pitch * oscOctave + osc1Detune);
+	osc2.freq(pitch * osc2Octave + osc2Detune);
 
 	myFFT();
 
@@ -251,7 +253,6 @@ var osc1OctaveUp = document.getElementById("osc1OctaveUp").addEventListener("cli
 	oscOctave = 2;
 });
 
-
 // OSC 2 TYPE CONTROLS
 
 var osc2Sine = document.getElementById("sine2").addEventListener("click", function(){
@@ -306,6 +307,8 @@ var decaySlider = document.querySelector("#decaySlider");
 var sustainSlider = document.querySelector("#sustainSlider");
 var releaseSlider = document.querySelector("#releaseSlider");
 var noiseSlider = document.querySelector("#noiseSlider");
+var osc1DetuneSlider = document.querySelector("#osc1Detune");
+var osc2DetuneSlider = document.querySelector("#osc2Detune");
 
 volumeSlider.oninput = function() {
 	masterVolume(parseFloat(this.value));
@@ -381,5 +384,29 @@ noiseSlider.onmousedown = function() {
 }
 
 noiseSlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
+osc1DetuneSlider.oninput = function() {
+	osc1Detune = parseFloat(this.value);
+}
+
+osc1DetuneSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+osc1DetuneSlider.onmouseup = function() {
+	mouseIsLocked = false;
+}
+
+osc2DetuneSlider.oninput = function() {
+	osc2Detune = parseFloat(this.value);
+}
+
+osc2DetuneSlider.onmousedown = function() {
+	mouseIsLocked = true;
+}
+
+osc2DetuneSlider.onmouseup = function() {
 	mouseIsLocked = false;
 }
