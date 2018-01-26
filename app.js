@@ -1,6 +1,8 @@
 // audio variables
 var osc,
 	osc2,
+	oscOctave = 1, 
+	osc2Octave = 1,
 	noiseOsc,
 	noiseAmount = 0,
 	attackLevel = 1.0,
@@ -81,8 +83,8 @@ function draw(){
 	noiseEnvelope.setRange(attackLevel, releaseLevel);
 	noiseEnvelope.mult(noiseAmount);
 
-	osc.freq(pitch);
-	osc2.freq(pitch);
+	osc.freq(pitch * oscOctave);
+	osc2.freq(pitch * osc2Octave);
 
 	myFFT();
 
@@ -217,7 +219,7 @@ function centerCanvas() {
 	canvas.position(x, y);
 }
 
-// OSC CONTROLS
+// OSC 1 TYPE CONTROLS
 
 var osc1Sine = document.getElementById("sine1").addEventListener("click", function(){
 	osc.setType("sine");
@@ -235,6 +237,23 @@ var osc1Sawtooth = document.getElementById("sawtooth1").addEventListener("click"
 	osc.setType("sawtooth");
 });
 
+// OSC 1 OCTAVE CONTROLS
+
+var osc1OctaveDown = document.getElementById("osc1OctaveDown").addEventListener("click", function(){
+	oscOctave = .5;
+});
+
+var osc1OctaveDefault = document.getElementById("osc1OctaveDefault").addEventListener("click", function(){
+	oscOctave = 1;
+});
+
+var osc1OctaveUp = document.getElementById("osc1OctaveUp").addEventListener("click", function(){
+	oscOctave = 2;
+});
+
+
+// OSC 2 TYPE CONTROLS
+
 var osc2Sine = document.getElementById("sine2").addEventListener("click", function(){
 	osc2.setType("sine");
 });
@@ -249,6 +268,20 @@ var osc2Square = document.getElementById("square2").addEventListener("click", fu
 
 var osc2Sawtooth = document.getElementById("sawtooth2").addEventListener("click", function(){
 	osc2.setType("sawtooth");
+});
+
+// OSC 2 OCTAVE CONTROLS
+
+var osc2OctaveDown = document.getElementById("osc2OctaveDown").addEventListener("click", function(){
+	osc2Octave = .5;
+});
+
+var osc2OctaveDefault = document.getElementById("osc2OctaveDefault").addEventListener("click", function(){
+	osc2Octave = 1;
+});
+
+var osc2OctaveUp = document.getElementById("osc2OctaveUp").addEventListener("click", function(){
+	osc2Octave = 2;
 });
 
 // NOISE CONTROLS
