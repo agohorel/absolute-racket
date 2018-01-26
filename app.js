@@ -251,6 +251,18 @@ var osc2Sawtooth = document.getElementById("sawtooth2").addEventListener("click"
 	osc2.setType("sawtooth");
 });
 
+var whiteNoise = document.getElementById("whiteNoise").addEventListener("click", function(){
+	noiseOsc.setType("white");
+});
+
+var pinkNoise = document.getElementById("pinkNoise").addEventListener("click", function(){
+	noiseOsc.setType("pink");
+});
+
+var brownNoise = document.getElementById("brownNoise").addEventListener("click", function(){
+	noiseOsc.setType("brown");
+});
+
 var volumeSlider = document.querySelector("#volumeSlider");
 var attackSlider = document.querySelector("#attackSlider");
 var decaySlider = document.querySelector("#decaySlider");
