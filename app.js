@@ -7,7 +7,7 @@ var osc,
 	releaseLevel = 0,
 	attack = 0.0,
 	decay = 0.2,
-	sustain = 0.2,
+	sustain = 1,
 	release = 0.5,
 	envelope,
 	noiseEnvelope,
@@ -217,7 +217,7 @@ function centerCanvas() {
 	canvas.position(x, y);
 }
 
-// DOM/GUI stuff
+// OSC CONTROLS
 
 var osc1Sine = document.getElementById("sine1").addEventListener("click", function(){
 	osc.setType("sine");
@@ -251,6 +251,8 @@ var osc2Sawtooth = document.getElementById("sawtooth2").addEventListener("click"
 	osc2.setType("sawtooth");
 });
 
+// NOISE CONTROLS
+
 var whiteNoise = document.getElementById("whiteNoise").addEventListener("click", function(){
 	noiseOsc.setType("white");
 });
@@ -262,6 +264,8 @@ var pinkNoise = document.getElementById("pinkNoise").addEventListener("click", f
 var brownNoise = document.getElementById("brownNoise").addEventListener("click", function(){
 	noiseOsc.setType("brown");
 });
+
+// SLIDER CONTROLS
 
 var volumeSlider = document.querySelector("#volumeSlider");
 var attackSlider = document.querySelector("#attackSlider");
