@@ -1,5 +1,6 @@
 // audio variables
 var osc,
+	osc2,
 	noiseOsc,
 	noiseAmount = 0,
 	attackLevel = 1.0,
@@ -54,6 +55,10 @@ function setup(){
 	osc.setType("sawtooth");
 	osc.start();
 
+	osc2 = new p5.Oscillator();
+	osc2.setType("sine");
+	osc2.start();
+
 	envelope = new p5.Env();
 	noiseEnvelope = new p5.Env();
 
@@ -77,16 +82,19 @@ function draw(){
 	noiseEnvelope.mult(noiseAmount);
 
 	osc.freq(pitch);
+	osc2.freq(pitch);
 
 	myFFT();
 
 	if (validKey === true){
 		envelope.play();
 		osc.amp(envelope);
+		osc2.amp(envelope);
 		noiseEnvelope.play();
 		noiseOsc.amp(noiseEnvelope);
 	} else {
 		osc.amp(0);
+		osc2.amp(0);
 		noiseOsc.amp(0);
 	}
 
@@ -116,6 +124,7 @@ function keyPressed(){
 	else {
 		validKey = false;
 		osc.amp(0);
+		osc2.amp(0);
 		noiseOsc.amp(0);
 	}
 }
@@ -135,7 +144,9 @@ function mouseDragged(){
 		// LFP controls
 		if (mouseButton === LEFT){
 			osc.disconnect();
-			osc.connect(hpFilter)
+			osc.connect(hpFilter);
+			osc2.disconnect();
+			osc2.connect(hpFilter);
 			noiseOsc.disconnect();
 			noiseOsc.connect(hpFilter);
 
@@ -148,6 +159,8 @@ function mouseDragged(){
 		else if (mouseButton === RIGHT){
 			osc.disconnect();
 			osc.connect(lpFilter);
+			osc2.disconnect();
+			osc2.connect(lpFilter);
 			noiseOsc.disconnect();
 			noiseOsc.connect(lpFilter);
 
@@ -184,6 +197,8 @@ function resetFilters(){
 	lpFilter.res(q);
 	osc.disconnect();
 	osc.connect();
+	osc2.disconnect();
+	osc2.connect();
 	noiseOsc.disconnect();
 	noiseOsc.connect();
 }
@@ -204,33 +219,37 @@ function centerCanvas() {
 
 // DOM/GUI stuff
 
-var buttons = document.querySelectorAll(".btn");
+var osc1Sine = document.getElementById("sine1").addEventListener("click", function(){
+	osc.setType("sine");
+});
 
-for (var i = 0; i < buttons.length; i++){
-	buttons[i].addEventListener("click", function(){
-		if (this.innerText === "Sine"){
-			osc.setType("sine");
-		}
-		else if (this.innerText === "Triangle"){
-			osc.setType("triangle");
-		}
-		else if (this.innerText === "Square"){
-			osc.setType("square");
-		}
-		else if (this.innerText === "Sawtooth"){
-			osc.setType("sawtooth");
-		}
-		else if (this.innerText === "White"){
-			noiseOsc.setType("white");
-		}
-		else if (this.innerText === "Pink"){
-			noiseOsc.setType("pink");
-		}
-		else if (this.innerText === "Brown"){
-			noiseOsc.setType("brown");
-		}
-	});
-}
+var osc1Triangle = document.getElementById("triangle1").addEventListener("click", function(){
+	osc.setType("triangle");
+});
+
+var osc1Square = document.getElementById("square1").addEventListener("click", function(){
+	osc.setType("square");
+});
+
+var osc1Sawtooth = document.getElementById("sawtooth1").addEventListener("click", function(){
+	osc.setType("sawtooth");
+});
+
+var osc2Sine = document.getElementById("sine2").addEventListener("click", function(){
+	osc2.setType("sine");
+});
+
+var osc2Triangle = document.getElementById("triangle2").addEventListener("click", function(){
+	osc2.setType("triangle");
+});
+
+var osc2Square = document.getElementById("square2").addEventListener("click", function(){
+	osc2.setType("square");
+});
+
+var osc2Sawtooth = document.getElementById("sawtooth2").addEventListener("click", function(){
+	osc2.setType("sawtooth");
+});
 
 var volumeSlider = document.querySelector("#volumeSlider");
 var attackSlider = document.querySelector("#attackSlider");
