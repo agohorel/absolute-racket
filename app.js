@@ -301,6 +301,7 @@ var brownNoise = document.getElementById("brownNoise").addEventListener("click",
 
 // SLIDER CONTROLS
 
+var sliders = document.getElementsByClassName("slider");
 var volumeSlider = document.querySelector("#volumeSlider");
 var attackSlider = document.querySelector("#attackSlider");
 var decaySlider = document.querySelector("#decaySlider");
@@ -310,16 +311,21 @@ var noiseSlider = document.querySelector("#noiseSlider");
 var osc1DetuneSlider = document.querySelector("#osc1Detune");
 var osc2DetuneSlider = document.querySelector("#osc2Detune");
 
+// prevent slider interactions from triggering other mouseclick events
+for (var i = 0; i < sliders.length; i++){
+	sliders[i].onmousedown = function() {
+		mouseIsLocked = true;
+		console.log("you clicked a slider");
+	}
+
+	sliders[i].onmouseup = function() {
+		mouseIsLocked = false;
+		console.log("you released the mouse from a slider");
+	}
+}
+
 volumeSlider.oninput = function() {
 	masterVolume(parseFloat(this.value));
-}
-
-volumeSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-volumeSlider.onmouseup = function() {
-	mouseIsLocked = false;
 }
 
 attackSlider.oninput = function() {
@@ -327,25 +333,9 @@ attackSlider.oninput = function() {
 	attack = parseFloat(this.value);
 }
 
-attackSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-attackSlider.onmouseup = function() {
-	mouseIsLocked = false;
-}
-
 decaySlider.oninput = function() {
 	mouseIsLocked = true;
 	decay = parseFloat(this.value);
-}
-
-decaySlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-decaySlider.onmouseup = function() {
-	mouseIsLocked = false;
 }
 
 sustainSlider.oninput = function() {
@@ -353,25 +343,9 @@ sustainSlider.oninput = function() {
 	sustain = parseFloat(this.value);
 }
 
-sustainSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-sustainSlider.onmouseup = function() {
-	mouseIsLocked = false;
-}
-
 releaseSlider.oninput = function() {
 	mouseIsLocked = true;
 	release = parseFloat(this.value);
-}
-
-releaseSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-releaseSlider.onmouseup = function() {
-	mouseIsLocked = false;
 }
 
 noiseSlider.oninput = function() {
@@ -379,34 +353,10 @@ noiseSlider.oninput = function() {
 	noiseAmount = parseFloat(this.value);
 }
 
-noiseSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-noiseSlider.onmouseup = function() {
-	mouseIsLocked = false;
-}
-
 osc1DetuneSlider.oninput = function() {
 	osc1Detune = parseFloat(this.value);
 }
 
-osc1DetuneSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-osc1DetuneSlider.onmouseup = function() {
-	mouseIsLocked = false;
-}
-
 osc2DetuneSlider.oninput = function() {
 	osc2Detune = parseFloat(this.value);
-}
-
-osc2DetuneSlider.onmousedown = function() {
-	mouseIsLocked = true;
-}
-
-osc2DetuneSlider.onmouseup = function() {
-	mouseIsLocked = false;
 }
