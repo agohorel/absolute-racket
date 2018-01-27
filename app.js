@@ -315,12 +315,10 @@ var osc2DetuneSlider = document.querySelector("#osc2Detune");
 for (var i = 0; i < sliders.length; i++){
 	sliders[i].onmousedown = function() {
 		mouseIsLocked = true;
-		console.log("you clicked a slider");
 	}
 
 	sliders[i].onmouseup = function() {
-		mouseIsLocked = false;
-		console.log("you released the mouse from a slider");
+		mouseIsLocked = false;z
 	}
 }
 
@@ -329,27 +327,22 @@ volumeSlider.oninput = function() {
 }
 
 attackSlider.oninput = function() {
-	mouseIsLocked = true;
 	attack = parseFloat(this.value);
 }
 
 decaySlider.oninput = function() {
-	mouseIsLocked = true;
 	decay = parseFloat(this.value);
 }
 
 sustainSlider.oninput = function() {
-	mouseIsLocked = true;
 	sustain = parseFloat(this.value);
 }
 
 releaseSlider.oninput = function() {
-	mouseIsLocked = true;
 	release = parseFloat(this.value);
 }
 
 noiseSlider.oninput = function() {
-	mouseIsLocked = true;
 	noiseAmount = parseFloat(this.value);
 }
 
