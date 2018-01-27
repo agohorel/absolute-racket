@@ -12,6 +12,11 @@ h6 {
 	padding-top: 10px;
 	margin-bottom: 2px;
 	color: white;
+	/*prevent text from being selected while dragging mouse*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 
 p {
@@ -19,6 +24,11 @@ p {
 	padding-top: 10px;
 	margin-bottom: 2px;
 	color: white;
+	/*prevent text from being selected while dragging mouse*/
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
 }
 
 .btn-secondary {
