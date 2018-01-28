@@ -247,6 +247,10 @@ var osc1Sawtooth = document.getElementById("sawtooth1").addEventListener("click"
 
 // OSC 1 OCTAVE CONTROLS
 
+var osc1OctaveDown2 = document.getElementById("osc1OctaveDown2").addEventListener("click", function(){
+	oscOctave = .25;
+});
+
 var osc1OctaveDown = document.getElementById("osc1OctaveDown").addEventListener("click", function(){
 	oscOctave = .5;
 });
@@ -257,6 +261,10 @@ var osc1OctaveDefault = document.getElementById("osc1OctaveDefault").addEventLis
 
 var osc1OctaveUp = document.getElementById("osc1OctaveUp").addEventListener("click", function(){
 	oscOctave = 2;
+});
+
+var osc1OctaveUp2 = document.getElementById("osc1OctaveUp2").addEventListener("click", function(){
+	oscOctave = 4;
 });
 
 // OSC 2 TYPE CONTROLS
@@ -279,6 +287,10 @@ var osc2Sawtooth = document.getElementById("sawtooth2").addEventListener("click"
 
 // OSC 2 OCTAVE CONTROLS
 
+var osc2OctaveDown2 = document.getElementById("osc2OctaveDown2").addEventListener("click", function(){
+	osc2Octave = .25;
+});
+
 var osc2OctaveDown = document.getElementById("osc2OctaveDown").addEventListener("click", function(){
 	osc2Octave = .5;
 });
@@ -289,6 +301,10 @@ var osc2OctaveDefault = document.getElementById("osc2OctaveDefault").addEventLis
 
 var osc2OctaveUp = document.getElementById("osc2OctaveUp").addEventListener("click", function(){
 	osc2Octave = 2;
+});
+
+var osc2OctaveUp2 = document.getElementById("osc2OctaveUp2").addEventListener("click", function(){
+	osc2Octave = 4;
 });
 
 // NOISE CONTROLS
