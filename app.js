@@ -35,7 +35,8 @@ var osc,
 	osc1Pan = 0,
 	osc1Phase = .5,
 	osc2Pan = 0,
-	osc2Phase = .5;
+	osc2Phase = .5,
+	waveform;
 
 var notes = {
 	90: 130.81,
@@ -231,8 +232,17 @@ function spectrumView() {
 }
 
 function waveformView(){
-	fill(255, 0, 0);
-	rect(0, 0, width, height);
+	waveform = fft.waveform();
+	noFill();
+	beginShape();
+	stroke(bass, mid, high);
+	strokeWeight(5);
+	for (var i = 0; i < waveform.length; i++){
+		var x = map(i, 0, waveform.length, 0, width);
+		var y = map(waveform[i], -1, 1, 0, height);
+		vertex(x, y);
+	}
+	endShape();
 }
 
 // resize canvas if window is resized
