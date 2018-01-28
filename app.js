@@ -13,7 +13,6 @@ var osc,
 	decay = 0.2,
 	sustain = 1,
 	release = 0.5,
-	envelope,
 	noiseEnvelope,
 	pitch,
 	hpFilter,
@@ -27,7 +26,10 @@ var osc,
 	high,
 	amplitude,
 	validKey,
-	mouseIsLocked = false;
+	mouseIsLocked = false,
+	osc1Env,
+	osc2Env,
+	oscMixValue = .5;
 
 var notes = {
 	90: 130.81,
@@ -63,7 +65,8 @@ function setup(){
 	osc2.setType("sine");
 	osc2.start();
 
-	envelope = new p5.Env();
+	osc1Env = new p5.Env();
+	osc2Env = new p5.Env();
 	noiseEnvelope = new p5.Env();
 
 	noiseOsc = new p5.Noise;
@@ -79,8 +82,11 @@ function setup(){
 }
 
 function draw(){
-	envelope.setADSR(attack, decay, sustain, release);
-	envelope.setRange(attackLevel, releaseLevel);
+	osc1Env.setADSR(attack, decay, sustain, release);
+	osc2Env.setADSR(attack, decay, sustain, release);
+	osc1Env.setRange(1 - oscMixValue, releaseLevel);
+	osc2Env.setRange(oscMixValue, releaseLevel);
+
 	noiseEnvelope.setADSR(attack, decay, sustain, release);
 	noiseEnvelope.setRange(attackLevel, releaseLevel);
 	noiseEnvelope.mult(noiseAmount);
@@ -91,9 +97,10 @@ function draw(){
 	myFFT();
 
 	if (validKey === true){
-		envelope.play();
-		osc.amp(envelope);
-		osc2.amp(envelope);
+		osc1Env.play();
+		osc2Env.play();
+		osc.amp(osc1Env);
+		osc2.amp(osc2Env);
 		noiseEnvelope.play();
 		noiseOsc.amp(noiseEnvelope);
 	} else {
@@ -310,6 +317,7 @@ var releaseSlider = document.querySelector("#releaseSlider");
 var noiseSlider = document.querySelector("#noiseSlider");
 var osc1DetuneSlider = document.querySelector("#osc1Detune");
 var osc2DetuneSlider = document.querySelector("#osc2Detune");
+var oscMixSlider = document.querySelector("#oscMix");
 
 // prevent slider interactions from triggering other mouseclick events
 for (var i = 0; i < sliders.length; i++){
@@ -318,7 +326,7 @@ for (var i = 0; i < sliders.length; i++){
 	}
 
 	sliders[i].onmouseup = function() {
-		mouseIsLocked = false;z
+		mouseIsLocked = false;
 	}
 }
 
@@ -352,4 +360,8 @@ osc1DetuneSlider.oninput = function() {
 
 osc2DetuneSlider.oninput = function() {
 	osc2Detune = parseFloat(this.value);
+}
+
+oscMixSlider.oninput = function() {
+	oscMixValue = map(parseFloat(this.value), -1, 1, 0.001, .999);
 }

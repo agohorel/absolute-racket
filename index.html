@@ -24,17 +24,20 @@
 		<div class="container">
 			
 			<div class="row">
-				<div class="col-6">
+				<div class="col-4">
 					<h6>Osc1 Type</h6>
 				</div>
-				<div class="col-6">
+				<div class="col-4">
+					<h6>Osc Mix</h6>
+				</div>
+				<div class="col-4">
 					<h6>Osc2 Type</h6>
 				</div>
 			</div>
 
 			<div class="row">
 				<!-- OSC1 -->
-				<div class="col-6">
+				<div class="col-4">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" for="sineWave" id="sine1">
 							<input type="radio" name="oscType" id="sineWave" autocomplete="off"> Sine
@@ -50,8 +53,16 @@
 						</label>
 					</div>
 				</div>
+
+				<!-- OSC MIX -->
+				<div class="col-4">
+					<div class="slidecontainerHorizontal slider">
+						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
+					</div>	
+				</div>
+
 				<!-- OSC2 -->	
-				<div class="col-6">
+				<div class="col-4">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm active" for="sineWave" id="sine2">
 							<input type="radio" name="oscType" id="sineWave2" autocomplete="off"> Sine
@@ -70,22 +81,22 @@
 			</div>
 
 			<div class="row">
-				<div class="col-3">
+				<div class="col-2">
 					<h6>Osc1 Octave</h6>
 				</div>
-				<div class="col-3">
+				<div class="col-6">
 					<h6>Osc1 Detune</h6>
 				</div>
-				<div class="col-3">
+				<div class="col-2">
 					<h6>Osc2 Octave</h6>
 				</div>
-				<div class="col-3">
+				<div class="col-2">
 					<h6>Osc2 Detune</h6>
 				</div>
 			</div>	
 
 			<div class="row">
-				<div class="col-3">
+				<div class="col-2">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" id="osc1OctaveDown">
 							<input type="radio" name="octave" autocomplete="off"> -1
@@ -99,13 +110,13 @@
 					</div>
 				</div>
 
-				<div class="col-3">
+				<div class="col-6">
 					<div class="slidecontainerHorizontal slider">
 						<input type="range" min="-1" max="1" step=".01" value="0" class="slider" id="osc1Detune">
 					</div>	
 				</div>
 
-				<div class="col-3">
+				<div class="col-2">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" id="osc2OctaveDown">
 							<input type="radio" name="octave" autocomplete="off"> -1
@@ -119,7 +130,7 @@
 					</div>
 				</div>
 
-				<div class="col-3">
+				<div class="col-2">
 					<div class="slidecontainerHorizontal slider">
 						<input type="range" min="-1" max="1" step=".01" value="0" class="slider" id="osc2Detune">
 					</div>	
