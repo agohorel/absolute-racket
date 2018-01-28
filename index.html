@@ -22,22 +22,19 @@
 	
 	<div id="main">
 		<div class="container">
-			
+			<!-- OSC TYPE LABEL -->
 			<div class="row">
-				<div class="col-4">
+				<div class="col-6">
 					<h6>Osc1 Type</h6>
 				</div>
-				<div class="col-4">
-					<h6>Osc Mix</h6>
-				</div>
-				<div class="col-4">
+				<div class="col-6">
 					<h6>Osc2 Type</h6>
 				</div>
 			</div>
 
+			<!-- OSC 1 TYPE BUTTONS-->
 			<div class="row">
-				<!-- OSC1 -->
-				<div class="col-4">
+				<div class="col-6">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" for="sineWave" id="sine1">
 							<input type="radio" name="oscType" id="sineWave" autocomplete="off"> Sine
@@ -54,15 +51,8 @@
 					</div>
 				</div>
 
-				<!-- OSC MIX -->
-				<div class="col-4">
-					<div class="slidecontainerHorizontal slider">
-						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
-					</div>	
-				</div>
-
-				<!-- OSC2 -->	
-				<div class="col-4">
+				<!-- OSC2 TYPE BUTTONS-->	
+				<div class="col-6">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm active" for="sineWave" id="sine2">
 							<input type="radio" name="oscType" id="sineWave2" autocomplete="off"> Sine
@@ -80,23 +70,25 @@
 				</div>
 			</div>
 
+			<!-- OSC OCTAVE LABELS -->
 			<div class="row">
-				<div class="col-2">
+				<div class="col-3">
 					<h6>Osc1 Octave</h6>
 				</div>
-				<div class="col-6">
+				<div class="col-3">
 					<h6>Osc1 Detune</h6>
 				</div>
-				<div class="col-2">
+				<div class="col-3">
 					<h6>Osc2 Octave</h6>
 				</div>
-				<div class="col-2">
+				<div class="col-3">
 					<h6>Osc2 Detune</h6>
 				</div>
 			</div>	
 
+			<!-- OSC1 OCTAVE BUTTONS -->
 			<div class="row">
-				<div class="col-2">
+				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" id="osc1OctaveDown2">
 							<input type="radio" name="octave" autocomplete="off"> -2
@@ -115,14 +107,14 @@
 						</label>
 					</div>
 				</div>
-
-				<div class="col-6">
+				<!-- OSC1 DETUNE SLIDER -->
+				<div class="col-3">
 					<div class="slidecontainerHorizontal slider">
 						<input type="range" min="-1" max="1" step=".01" value="0" class="slider" id="osc1Detune">
 					</div>	
 				</div>
-
-				<div class="col-2">
+				<!-- OSC2 OCTAVE BUTTONS -->
+				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" id="osc2OctaveDown2">
 							<input type="radio" name="octave" autocomplete="off"> -2
@@ -141,23 +133,58 @@
 						</label>
 					</div>
 				</div>
-
-				<div class="col-2">
+				<!-- OSC2 DETUNE SLIDER -->
+				<div class="col-3">
 					<div class="slidecontainerHorizontal slider">
 						<input type="range" min="-1" max="1" step=".01" value="0" class="slider" id="osc2Detune">
 					</div>	
 				</div>
-
 			</div>	
-
+			<!-- PAN/PHASE LABELS -->
 			<div class="row">
-				<div class="col-6">
+				<div class="col-3">
+					<h6>Osc1 Pan</h6>
+				</div>
+				<div class="col-3">
+					<h6>Osc1 Phase</h6>
+				</div>
+				<div class="col-3">
+					<h6>Osc2 Pan</h6>
+				</div>
+				<div class="col-3">
+					<h6>Osc2 Phase</h6>
+				</div>
+			</div>
+
+			<!-- PAN/PHASE SLIDERS -->
+			<div class="row">
+				<div class="col-3">
+					<input type="range" min="-1" max="1" step=".01" value="0" class="slider" id="osc1Pan">
+				</div>
+				<div class="col-3">
+					<input type="range" min="0" max="1" step=".01" value="0.5" class="slider" id="osc1Phase">
+				</div>
+				<div class="col-3">
+					<input type="range" min="-1" max="1" step=".01" value="0" class="slider" id="osc2Pan">
+				</div>
+				<div class="col-3">
+					<input type="range" min="0" max="1" step=".01" value="0.5" class="slider" id="osc2Phase">
+				</div>
+			</div>
+
+			<!-- NOISE TYPE/OSC MIX LABELS -->
+			<div class="row">
+				<div class="col-3">
 					<h6>Noise Type</h6>
+				</div>
+				<div class="col-3">
+					<h6>Osc Mix</h6>
 				</div>
 			</div>
 
 			<div class="row">
-				<div class="col-6">
+				<!-- NOISE TYPE BUTTONS -->
+				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm active" for="whiteNoise" id="whiteNoise">
 							<input type="radio" name="oscType" id="whiteNoise" autocomplete="off"> White
@@ -169,6 +196,12 @@
 							<input type="radio" name="oscType" id="brownNoise" autocomplete="off"> Brown
 						</label>
 					</div>
+				</div>
+				<!-- OSC MIX SLIDER -->
+				<div class="col-3">
+					<div class="slidecontainerHorizontal slider">
+						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
+					</div>	
 				</div>
 			</div>	
 			
