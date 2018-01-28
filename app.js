@@ -68,6 +68,7 @@ function setup(){
 	osc1Env = new p5.Env();
 	osc2Env = new p5.Env();
 	noiseEnvelope = new p5.Env();
+	noiseEnvelope.mult(0);
 
 	noiseOsc = new p5.Noise;
 	noiseOsc.start();
@@ -83,15 +84,6 @@ function setup(){
 
 function draw(){
 	print(frameRate());
-	osc1Env.setADSR(attack, decay, sustain, release);
-	osc2Env.setADSR(attack, decay, sustain, release);
-	osc1Env.setRange(1 - oscMixValue, releaseLevel);
-	osc2Env.setRange(oscMixValue, releaseLevel);
-
-	noiseEnvelope.setADSR(attack, decay, sustain, release);
-	noiseEnvelope.setRange(attackLevel, releaseLevel);
-	noiseEnvelope.mult(noiseAmount);
-
 	osc.freq(pitch * oscOctave + osc1Detune);
 	osc2.freq(pitch * osc2Octave + osc2Detune);
 
@@ -329,6 +321,12 @@ for (var i = 0; i < sliders.length; i++){
 	sliders[i].onmouseup = function() {
 		mouseIsLocked = false;
 	}
+
+	sliders[i].oninput = function() {
+		osc1Env.setADSR(attack, decay, sustain, release);
+		osc2Env.setADSR(attack, decay, sustain, release);
+		noiseEnvelope.setADSR(attack, decay, sustain, release);
+	}
 }
 
 volumeSlider.oninput = function() {
@@ -353,6 +351,7 @@ releaseSlider.oninput = function() {
 
 noiseSlider.oninput = function() {
 	noiseAmount = parseFloat(this.value);
+	noiseEnvelope.mult(noiseAmount);
 }
 
 osc1DetuneSlider.oninput = function() {
@@ -365,4 +364,6 @@ osc2DetuneSlider.oninput = function() {
 
 oscMixSlider.oninput = function() {
 	oscMixValue = map(parseFloat(this.value), -1, 1, 0.001, .999);
+	osc1Env.setRange(1 - oscMixValue, releaseLevel);
+	osc2Env.setRange(oscMixValue, releaseLevel);
 }
