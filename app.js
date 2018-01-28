@@ -1,3 +1,5 @@
+p5.disableFriendlyErrors = true;
+
 // audio variables
 var osc,
 	osc2,
@@ -52,6 +54,7 @@ var canvas;
 
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
+	pixelDensity(.8);
 	centerCanvas();
 	noSmooth();
 
