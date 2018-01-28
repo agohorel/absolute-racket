@@ -109,11 +109,14 @@ function draw(){
 	rect(0, 0, width, height);
 
 	noStroke();
-
 	// draw the spectrum
 	for (var i = 0; i < spectrum.length; i++){
 		// set spectrum colors based on freq
-		fill((bass * .7) * (spectrum[i] * .02), (mid * .7) * (spectrum[i] * .02), (high * .7) * (spectrum[i] * .02));
+		var spec = map(spectrum[i], 0, 512, 0, 25.5);
+		var r = map(bass, 0, 255, 0, 12) * spec; 
+		var g = map(mid, 0, 255, 0, 4) * spec;
+		var b = map(high, 0, 255, 0, 15) * spec;
+		fill(r, g, b);
 
 		var x = map(i, 0, spectrum.length, 0, width);
 		var h = -height + map(spectrum[i], 0, 255, height, 0);
