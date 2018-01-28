@@ -54,7 +54,8 @@ var notes = {
 }
 
 // other variables
-var canvas;
+var canvas,
+	visMode = "spectrumView";
 
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
@@ -112,19 +113,12 @@ function draw(){
 	fill(0, 80);
 	rect(0, 0, width, height);
 
-	noStroke();
-	// draw the spectrum
-	for (var i = 0; i < spectrum.length; i++){
-		// set spectrum colors based on freq
-		var spec = map(spectrum[i], 0, 512, 0, 25.5);
-		var r = map(bass, 0, 255, 0, 12) * spec; 
-		var g = map(mid, 0, 255, 0, 4) * spec;
-		var b = map(high, 0, 255, 0, 15) * spec;
-		fill(r, g, b);
-
-		var x = map(i, 0, spectrum.length, 0, width);
-		var h = -height + map(spectrum[i], 0, 255, height, 0);
-		rect(x, height, width/spectrum.length * .5, h);
+	switch (visMode) {
+		case "spectrumView":
+			spectrumView();
+		break;
+		case "waveformView":
+			waveformView();
 	}
 }
 
@@ -217,6 +211,30 @@ function resetFilters(){
 	noiseOsc.connect();
 }
 
+// vis modes
+
+function spectrumView() {
+	noStroke();
+	// draw the spectrum
+	for (var i = 0; i < spectrum.length; i++){
+		// set spectrum colors based on freq
+		var spec = map(spectrum[i], 0, 512, 0, 25.5);
+		var r = map(bass, 0, 255, 0, 12) * spec; 
+		var g = map(mid, 0, 255, 0, 4) * spec;
+		var b = map(high, 0, 255, 0, 15) * spec;
+		fill(r, g, b);
+
+		var x = map(i, 0, spectrum.length, 0, width);
+		var h = -height + map(spectrum[i], 0, 255, height, 0);
+		rect(x, height, width/spectrum.length * .5, h);
+	}
+}
+
+function waveformView(){
+	fill(255, 0, 0);
+	rect(0, 0, width, height);
+}
+
 // resize canvas if window is resized
 function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
@@ -230,6 +248,16 @@ function centerCanvas() {
 	var y = (windowHeight - height) / 2;
 	canvas.position(x, y);
 }
+
+// VIS MODE BUTTON CONTROLS
+
+var spectrumViewButton = document.getElementById("spectrumView").addEventListener("click", function(){
+	visMode = "spectrumView";
+});
+
+var waveformViewButton = document.getElementById("waveformView").addEventListener("click", function(){
+	visMode = "waveformView";
+});
 
 // OSC 1 TYPE CONTROLS
 

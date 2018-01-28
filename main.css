@@ -95,3 +95,7 @@ p {
     background: #FFF;
     cursor: pointer; 
 }
+
+#horizonalSliderSpacer {
+	height: 121px;
+}
