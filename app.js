@@ -31,7 +31,11 @@ var osc,
 	mouseIsLocked = false,
 	osc1Env,
 	osc2Env,
-	oscMixValue = .5;
+	oscMixValue = .5,
+	osc1Pan = 0,
+	osc1Phase = .5,
+	osc2Pan = 0,
+	osc2Phase = .5;
 
 var notes = {
 	90: 130.81,
@@ -333,6 +337,10 @@ var noiseSlider = document.querySelector("#noiseSlider");
 var osc1DetuneSlider = document.querySelector("#osc1Detune");
 var osc2DetuneSlider = document.querySelector("#osc2Detune");
 var oscMixSlider = document.querySelector("#oscMix");
+var osc1PanSlider = document.querySelector("#osc1Pan");
+var osc2PanSlider = document.querySelector("#osc2Pan");
+var osc1PhaseSlider = document.querySelector("#osc1Phase");
+var osc2PhaseSlider = document.querySelector("#osc2Phase");
 
 // prevent slider interactions from triggering other mouseclick events
 for (var i = 0; i < sliders.length; i++){
@@ -388,4 +396,24 @@ oscMixSlider.oninput = function() {
 	oscMixValue = map(parseFloat(this.value), -1, 1, 0.001, .999);
 	osc1Env.setRange(1 - oscMixValue, releaseLevel);
 	osc2Env.setRange(oscMixValue, releaseLevel);
+}
+
+osc1PanSlider.oninput = function() {
+	osc1Pan	= parseFloat(this.value);
+	osc.pan(osc1Pan);
+}
+
+osc1PhaseSlider.oninput = function() {
+	osc1Phase = parseFloat(this.value);
+	osc.phase(osc1Phase);
+}
+
+osc2PanSlider.oninput = function() {
+	osc2Pan	= parseFloat(this.value);
+	osc2.pan(osc2Pan);
+}
+
+osc2PhaseSlider.oninput = function() {
+	osc2Phase = parseFloat(this.value);
+	osc2.phase(osc2Phase);
 }
