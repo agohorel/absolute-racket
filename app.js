@@ -36,7 +36,9 @@ var osc,
 	osc1Phase = .5,
 	osc2Pan = 0,
 	osc2Phase = .5,
-	waveform;
+	waveform,
+	leftVol,
+	rightVol;
 
 var notes = {
 	90: 130.81,
@@ -120,6 +122,9 @@ function draw(){
 		break;
 		case "waveformView":
 			waveformView();
+		break;
+		case "vectorscopeView":
+			vectorscopeView();
 	}
 }
 
@@ -245,6 +250,20 @@ function waveformView(){
 	endShape();
 }
 
+function vectorscopeView() {
+	strokeWeight(1);
+	stroke(bass, mid, high);
+	push();
+	translate(windowWidth/2, windowHeight/2);
+	for (var i = 0; i < spectrum.length; i++){
+		leftVol = map(amplitude.getLevel(0), 0, 1, 0, width);
+		rightVol = map(amplitude.getLevel(1), 0, 1, 0, height);
+		point(leftVol, rightVol);
+		point(rightVol, leftVol);
+	}
+	pop();
+}
+
 // resize canvas if window is resized
 function windowResized() {
 	resizeCanvas(windowWidth, windowHeight);
@@ -267,6 +286,10 @@ var spectrumViewButton = document.getElementById("spectrumView").addEventListene
 
 var waveformViewButton = document.getElementById("waveformView").addEventListener("click", function(){
 	visMode = "waveformView";
+});
+
+var vectorscopeViewButton = document.getElementById("vectorscopeView").addEventListener("click", function(){
+	visMode = "vectorscopeView";
 });
 
 // OSC 1 TYPE CONTROLS
