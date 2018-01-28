@@ -82,6 +82,7 @@ function setup(){
 }
 
 function draw(){
+	print(frameRate());
 	osc1Env.setADSR(attack, decay, sustain, release);
 	osc2Env.setADSR(attack, decay, sustain, release);
 	osc1Env.setRange(1 - oscMixValue, releaseLevel);
@@ -114,11 +115,11 @@ function draw(){
 
 	noStroke();
 
-	// set spectrum colors based on freq
-	fill(bass, mid, high);
-
 	// draw the spectrum
 	for (var i = 0; i < spectrum.length; i++){
+		// set spectrum colors based on freq
+		fill((bass * .7) * (spectrum[i] * .02), (mid * .7) * (spectrum[i] * .02), (high * .7) * (spectrum[i] * .02));
+
 		var x = map(i, 0, spectrum.length, 0, width);
 		var h = -height + map(spectrum[i], 0, 255, height, 0);
 		rect(x, height, width/spectrum.length * .5, h);
