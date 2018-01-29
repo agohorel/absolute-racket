@@ -172,13 +172,16 @@
 				</div>
 			</div>
 
-			<!-- NOISE TYPE/OSC MIX LABELS -->
+			<!-- NOISE TYPE/OSC MIX/VIS MODE LABELS -->
 			<div class="row">
 				<div class="col-3">
 					<h6>Noise Type</h6>
 				</div>
 				<div class="col-3">
 					<h6>Osc Mix</h6>
+				</div>
+				<div class="col-6">
+					<h6>Visualization Type</h6>
 				</div>
 			</div>
 
@@ -202,6 +205,20 @@
 					<div class="slidecontainerHorizontal slider">
 						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
 					</div>	
+				</div>
+				<!-- VIS MODE BUTTONS -->
+				<div class="col-6">
+					<div class="btn-group btn-group-toggle" data-toggle="buttons">
+						<label class="btn btn-secondary btn-sm active" for="spectrumViewButton" id="spectrumView">
+							<input type="radio" name="visMode" id="spectrumViewButton" autocomplete="off"> Spectrum View
+						</label>
+						<label class="btn btn-secondary btn-sm" for="waveformViewButton" id="waveformView">
+							<input type="radio" name="visMode" id="waveformViewButton" autocomplete="off"> Waveform View
+						</label>
+						<label class="btn btn-secondary btn-sm" for="vectorscopeButton" id="vectorscopeView">
+							<input type="radio" name="visMode" id="vectorscopeButton" autocomplete="off"> Vectorscope View
+						</label>
+					</div>
 				</div>
 			</div>	
 			
@@ -270,34 +287,6 @@
 					</div>	
 				</div>
 			</div>
-
-			<div class="row">
-				<!-- spacer div to counteract hacky horizonal sliders -->
-				<div class="col-12" id="horizonalSliderSpacer"></div>
-			</div>
-
-			<div class="row">
-				<div class="col-12">
-					<h6>Visualization Type</h6>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-6">
-					<div class="btn-group btn-group-toggle" data-toggle="buttons">
-						<label class="btn btn-secondary btn-sm active" for="spectrumViewButton" id="spectrumView">
-							<input type="radio" name="visMode" id="spectrumViewButton" autocomplete="off"> Spectrum View
-						</label>
-						<label class="btn btn-secondary btn-sm" for="waveformViewButton" id="waveformView">
-							<input type="radio" name="visMode" id="waveformViewButton" autocomplete="off"> Waveform View
-						</label>
-						<label class="btn btn-secondary btn-sm" for="vectorscopeButton" id="vectorscopeView">
-							<input type="radio" name="visMode" id="vectorscopeButton" autocomplete="off"> Vectorscope View
-						</label>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
 
