@@ -17,10 +17,8 @@ var osc,
 	release = 0.5,
 	noiseEnvelope,
 	pitch,
-	hpFilter,
-	hpCutoff,
-	lpFilter,
-	lpCutoff,
+	filter,
+	cutoff,
 	q,
 	fft,
 	bass,
@@ -83,8 +81,7 @@ function setup(){
 	noiseOsc = new p5.Noise;
 	noiseOsc.start();
 
-	hpFilter = new p5.HighPass();
-	lpFilter = new p5.LowPass();
+	filter = new p5.Filter();
 	
 	amplitude = new p5.Amplitude();
 	fft = new p5.FFT(0.9, 512);
@@ -152,38 +149,27 @@ function keyReleased(){
 // }
 
 function mouseDragged(){
-	q = map(mouseY, 0, windowHeight, 20, 0);
-
 	if (mouseIsLocked == false){
-		// LFP controls
+		// filter controls
 		if (mouseButton === LEFT){
 			osc.disconnect();
-			osc.connect(hpFilter);
+			osc.connect(filter);
 			osc2.disconnect();
-			osc2.connect(hpFilter);
+			osc2.connect(filter);
 			noiseOsc.disconnect();
-			noiseOsc.connect(hpFilter);
+			noiseOsc.connect(filter);
 
-			hpCutoff = map(mouseX, 0, windowWidth, 0, 10000);
-			hpFilter.freq(hpCutoff);
-			hpFilter.res(q);
+			cutoff = map(mouseX, 0, windowWidth, 20, 20000);
+			q = map(mouseY, 0, windowHeight, 20, 0);		
+			
+			filter.set(cutoff, q);
 		}
 
-		// HFP controls
+		// eventual FX controls
 		else if (mouseButton === RIGHT){
-			osc.disconnect();
-			osc.connect(lpFilter);
-			osc2.disconnect();
-			osc2.connect(lpFilter);
-			noiseOsc.disconnect();
-			noiseOsc.connect(lpFilter);
-
-			lpCutoff = map(mouseX, 0, windowWidth, 20, 20000);
-			lpFilter.freq(lpCutoff);
-			lpFilter.res(q);
+			// some stuff
 		}
 	}
-
 }
 
 function mouseReleased(){
@@ -206,10 +192,7 @@ function resetFilters(){
 	hpCutoff = 0;
 	lpCutoff = 20000;
 	q = 0;
-	hpFilter.freq(hpCutoff);
-	lpFilter.freq(lpCutoff);
-	hpFilter.res(q);
-	lpFilter.res(q);
+	filter.set(filter, q);
 	osc.disconnect();
 	osc.connect();
 	osc2.disconnect();
@@ -275,6 +258,20 @@ function centerCanvas() {
 	var y = (windowHeight - height) / 2;
 	canvas.position(x, y);
 }
+
+// FILTER TYPE BUTTONS
+
+var lpfButton = document.getElementById("lowpass").addEventListener("click", function(){
+	filter.setType("lowpass");
+});
+
+var hpfButton = document.getElementById("highpass").addEventListener("click", function(){
+	filter.setType("highpass");
+});
+
+var bpfButton = document.getElementById("bandpass").addEventListener("click", function(){
+	filter.setType("bandpass");
+});
 
 // VIS MODE BUTTON CONTROLS
 

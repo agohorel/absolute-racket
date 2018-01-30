@@ -180,7 +180,10 @@
 				<div class="col-3">
 					<h6>Osc Mix</h6>
 				</div>
-				<div class="col-6">
+				<div class="col-3">
+					<h6>Filter Type</h6>
+				</div>
+				<div class="col-3">
 					<h6>Visualization Type</h6>
 				</div>
 			</div>
@@ -206,17 +209,33 @@
 						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
 					</div>	
 				</div>
+
+				<!-- FILTER TYPE BUTTONS -->
+				<div class="col-3">
+					<div class="btn-group btn-group-toggle" data-toggle="buttons">
+						<label class="btn btn-secondary btn-sm active" for="lowpass" id="lowpass">
+							<input type="radio" name="oscType" id="lowpass" autocomplete="off"> Lowpass
+						</label>
+						<label class="btn btn-secondary btn-sm" for="highpass" id="highpass">
+							<input type="radio" name="oscType" id="highpass" autocomplete="off"> Highpass
+						</label>
+						<label class="btn btn-secondary btn-sm" for="bandpass" id="bandpass">
+							<input type="radio" name="oscType" id="bandpass" autocomplete="off"> Bandpass
+						</label>
+					</div>
+				</div>
+
 				<!-- VIS MODE BUTTONS -->
-				<div class="col-6">
+				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm active" for="spectrumViewButton" id="spectrumView">
-							<input type="radio" name="visMode" id="spectrumViewButton" autocomplete="off"> Spectrum View
+							<input type="radio" name="visMode" id="spectrumViewButton" autocomplete="off"> Spectrum
 						</label>
 						<label class="btn btn-secondary btn-sm" for="waveformViewButton" id="waveformView">
-							<input type="radio" name="visMode" id="waveformViewButton" autocomplete="off"> Waveform View
+							<input type="radio" name="visMode" id="waveformViewButton" autocomplete="off"> Waveform
 						</label>
 						<label class="btn btn-secondary btn-sm" for="vectorscopeButton" id="vectorscopeView">
-							<input type="radio" name="visMode" id="vectorscopeButton" autocomplete="off"> Vectorscope View
+							<input type="radio" name="visMode" id="vectorscopeButton" autocomplete="off"> Vectorscope
 						</label>
 					</div>
 				</div>
