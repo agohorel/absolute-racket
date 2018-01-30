@@ -193,6 +193,7 @@ function mouseReleased(){
 // audio analysis stuff
 function myFFT(){
 	spectrum = fft.analyze();
+	waveform = fft.waveform();
 	volume = amplitude.getLevel();
 	bass = fft.getEnergy("bass");
 	mid = fft.getEnergy("mid");
@@ -237,7 +238,6 @@ function spectrumView() {
 }
 
 function waveformView(){
-	waveform = fft.waveform();
 	noFill();
 	beginShape();
 	stroke(bass, mid, high);
@@ -256,10 +256,10 @@ function vectorscopeView() {
 	push();
 	translate(windowWidth/2, windowHeight/2);
 	for (var i = 0; i < spectrum.length; i++){
-		leftVol = map(amplitude.getLevel(0), 0, 1, 0, width);
-		rightVol = map(amplitude.getLevel(1), 0, 1, 0, height);
-		point(leftVol, rightVol);
-		point(rightVol, leftVol);
+		// leftVol = map(amplitude.getLevel(0), 0, 1, 0, 10);
+		// rightVol = map(amplitude.getLevel(1), 0, 1, 0, 10);
+		// point(leftVol * spectrum[i], rightVol * spectrum[i]);
+		// point(rightVol * spectrum[i], leftVol * spectrum[i]);
 	}
 	pop();
 }
