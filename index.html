@@ -24,17 +24,20 @@
 		<div class="container">
 			<!-- OSC TYPE LABEL -->
 			<div class="row">
-				<div class="col-6">
+				<div class="col-3">
 					<h6>Osc1 Type</h6>
+				</div>
+				<div class="col-3">
+					<h6>Osc Mix</h6>
 				</div>
 				<div class="col-6">
 					<h6>Osc2 Type</h6>
 				</div>
 			</div>
 
-			<!-- OSC 1 TYPE BUTTONS-->
 			<div class="row">
-				<div class="col-6">
+				<!-- OSC 1 TYPE BUTTONS-->
+				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
 						<label class="btn btn-secondary btn-sm" for="sineWave" id="sine1">
 							<input type="radio" name="oscType" id="sineWave" autocomplete="off"> Sine
@@ -49,6 +52,13 @@
 							<input type="radio" name="oscType" id="sawtoothWave" autocomplete="off" checked> Sawtooth
 						</label>
 					</div>
+				</div>
+
+				<!-- OSC MIX SLIDER -->
+				<div class="col-3">
+					<div class="slidecontainerHorizontal slider">
+						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
+					</div>	
 				</div>
 
 				<!-- OSC2 TYPE BUTTONS-->	
@@ -155,7 +165,6 @@
 					<h6>Osc2 Phase</h6>
 				</div>
 			</div>
-
 			<!-- PAN/PHASE SLIDERS -->
 			<div class="row">
 				<div class="col-3">
@@ -171,14 +180,10 @@
 					<input type="range" min="0" max="1" step=".01" value="0.5" class="slider" id="osc2Phase">
 				</div>
 			</div>
-
 			<!-- NOISE TYPE/OSC MIX/VIS MODE LABELS -->
 			<div class="row">
 				<div class="col-3">
 					<h6>Noise Type</h6>
-				</div>
-				<div class="col-3">
-					<h6>Osc Mix</h6>
 				</div>
 				<div class="col-3">
 					<h6>Filter Type</h6>
@@ -203,13 +208,6 @@
 						</label>
 					</div>
 				</div>
-				<!-- OSC MIX SLIDER -->
-				<div class="col-3">
-					<div class="slidecontainerHorizontal slider">
-						<input type="range" min="-1" max="1" step=".01" class="slider" id="oscMix">
-					</div>	
-				</div>
-
 				<!-- FILTER TYPE BUTTONS -->
 				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
@@ -224,7 +222,6 @@
 						</label>
 					</div>
 				</div>
-
 				<!-- VIS MODE BUTTONS -->
 				<div class="col-3">
 					<div class="btn-group btn-group-toggle" data-toggle="buttons">
