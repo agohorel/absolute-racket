@@ -62,7 +62,6 @@ var canvas,
 
 function setup(){
 	canvas = createCanvas(windowWidth, windowHeight);
-	pixelDensity(.8);
 	centerCanvas();
 	noSmooth();
 
@@ -113,6 +112,7 @@ function draw(){
 		noiseOsc.amp(0);
 	}
 
+	noStroke();
 	fill(0, 80);
 	rect(0, 0, width, height);
 
@@ -225,10 +225,10 @@ function spectrumView() {
 	// draw the spectrum
 	for (var i = 0; i < spectrum.length; i++){
 		// set spectrum colors based on freq
-		var spec = map(spectrum[i], 0, 512, 0, 25.5);
-		var r = map(bass, 0, 255, 0, 12) * spec; 
-		var g = map(mid, 0, 255, 0, 4) * spec;
-		var b = map(high, 0, 255, 0, 15) * spec;
+		var spec = map(spectrum[i], 0, 512, 0, 25);
+		var r = map(bass, 0, 255, 0, 18) * spec; 
+		var g = map(mid, 0, 255, 0, 8) * spec;
+		var b = map(high, 0, 255, 0, 20) * spec;
 		fill(r, g, b);
 
 		var x = map(i, 0, spectrum.length, 0, width);
@@ -251,17 +251,15 @@ function waveformView(){
 }
 
 function vectorscopeView() {
-	strokeWeight(1);
-	stroke(bass, mid, high);
-	push();
-	translate(windowWidth/2, windowHeight/2);
-	for (var i = 0; i < spectrum.length; i++){
-		// leftVol = map(amplitude.getLevel(0), 0, 1, 0, 10);
-		// rightVol = map(amplitude.getLevel(1), 0, 1, 0, 10);
-		// point(leftVol * spectrum[i], rightVol * spectrum[i]);
-		// point(rightVol * spectrum[i], leftVol * spectrum[i]);
-	}
-	pop();
+	// strokeWeight(3);
+	// stroke(bass, mid, high);
+	// console.log(leftVol, rightVol);
+	// push();
+	// translate(width/2, height/2);
+	// leftVol = map(amplitude.getLevel(0), 0, 1, 0, width/4);
+	// rightVol = map(amplitude.getLevel(1), 0, 1, 0, height/4);
+	// point(leftVol, rightVol); 
+	// pop();
 }
 
 // resize canvas if window is resized
