@@ -36,7 +36,8 @@ var osc,
 	osc2Phase = .5,
 	waveform,
 	leftVol,
-	rightVol;
+	rightVol,
+	delay;
 
 var notes = {
 	90: 130.81,
@@ -82,6 +83,13 @@ function setup(){
 	noiseOsc.start();
 
 	filter = new p5.Filter();
+
+	delay = new p5.Delay();
+	// default effect is delay
+	osc.connect(delay);
+	osc2.connect(delay);
+	delay.disconnect();
+	delay.connect(filter);
 	
 	amplitude = new p5.Amplitude();
 	fft = new p5.FFT(0.9, 512);
@@ -167,7 +175,9 @@ function mouseDragged(){
 
 		// eventual FX controls
 		else if (mouseButton === RIGHT){
-			// some stuff
+			delay.delayTime(map(mouseX, 0, width, 0, 1));
+			delay.feedback(map(mouseX, 0, width, 0, .8));
+			delay.filter(map(mouseY, 0, height, 20000, 300));
 		}
 	}
 }
@@ -236,12 +246,15 @@ function waveformView(){
 function vectorscopeView() {
 	// strokeWeight(3);
 	// stroke(bass, mid, high);
-	// console.log(leftVol, rightVol);
 	// push();
 	// translate(width/2, height/2);
-	// leftVol = map(amplitude.getLevel(0), 0, 1, 0, width/4);
-	// rightVol = map(amplitude.getLevel(1), 0, 1, 0, height/4);
-	// point(leftVol, rightVol); 
+	// for (var i = 0; i < waveform.length; i++){
+	// 	// leftVol = map(amplitude.getLevel(0), -1, 1, 0, 500) * waveform[i];
+	// 	// rightVol = map(amplitude.getLevel(1), -1, 1, 0, 500) * waveform[i];
+	// 	leftVol = (amplitude.getLevel(0) * 500) * waveform[i];
+	// 	rightVol = (amplitude.getLevel(1) * 500) * waveform[i];
+	// 	point(leftVol, rightVol); 
+	// }
 	// pop();
 }
 
@@ -258,6 +271,15 @@ function centerCanvas() {
 	var y = (windowHeight - height) / 2;
 	canvas.position(x, y);
 }
+
+// FX TYPE BUTTONS
+
+var delayButton = document.getElementById("delayButton").addEventListener("click", function(){
+	osc.connect(delay);
+	osc2.connect(delay);
+	delay.disconnect();
+	delay.connect(filter);
+});
 
 // FILTER TYPE BUTTONS
 
