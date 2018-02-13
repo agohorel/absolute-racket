@@ -37,7 +37,8 @@ var osc,
 	waveform,
 	leftVol,
 	rightVol,
-	delay;
+	delay,
+	currentEffect = "delay";
 
 var notes = {
 	90: 130.81,
@@ -175,9 +176,15 @@ function mouseDragged(){
 
 		// eventual FX controls
 		else if (mouseButton === RIGHT){
-			delay.delayTime(map(mouseX, 0, width, 0, 1));
-			delay.feedback(map(mouseX, 0, width, 0, .8));
-			delay.filter(map(mouseY, 0, height, 20000, 300));
+			if (currentEffect === "delay"){
+				osc.connect(delay);
+				osc2.connect(delay);
+				delay.disconnect();
+				delay.connect(filter);
+				delay.delayTime(map(mouseX, 0, width, 0, 1));
+				delay.feedback(map(mouseX, 0, width, 0, .8));
+				delay.filter(map(mouseY, 0, height, 20000, 300));
+			}
 		}
 	}
 }
@@ -275,10 +282,7 @@ function centerCanvas() {
 // FX TYPE BUTTONS
 
 var delayButton = document.getElementById("delayButton").addEventListener("click", function(){
-	osc.connect(delay);
-	osc2.connect(delay);
-	delay.disconnect();
-	delay.connect(filter);
+	currentEffect = "delay";
 });
 
 // FILTER TYPE BUTTONS
