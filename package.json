@@ -1,0 +1,22 @@
+{
+  "name": "absolute-racket",
+  "version": "1.0.0",
+  "description": "a browser based synthesizer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/agohorel/absolute-racket.git"
+  },
+  "author": "0xFF",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/agohorel/absolute-racket/issues"
+  },
+  "homepage": "https://github.com/agohorel/absolute-racket#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
